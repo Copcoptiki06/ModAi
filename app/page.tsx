@@ -29,9 +29,12 @@ const learningContext = {
 };
 
 export default function Home() {
-  const [active, setActive] = useState(0);
+  const [stageIndex, setStageIndex] = useState(0);
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [attempts, setAttempts] = useState(0);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [completed, setCompleted] = useState(false);
   const [message, setMessage] = useState("Merhaba Ece! Önce bildiklerinle yeni model arasında bağ kuralım: Bir bina tuğlalardan oluşuyorsa canlılar hangi küçük birimlerden oluşur?");
   const [done, setDone] = useState<string[]>([]);
   const [mascotOpen, setMascotOpen] = useState(false);
@@ -69,12 +72,14 @@ export default function Home() {
     setMascotOpen(true);
   }
 
-  const question = scenarios[active % scenarios.length];
-  const progress = useMemo(() => Math.min(100, 24 + done.length * 14), [done]);
+  const question = scenarios[questionIndex];
+  const progress = useMemo(() => Math.round((done.length / scenarios.length) * 100), [done]);
 
   function choose(label: string) {
+    if (isCorrect || completed) return;
     setSelected(label);
     if (label === question.type) {
+      setIsCorrect(true);
       setMessage(`Harika gözlem! ${question.detail} Şimdi modelde bir sonraki halkayı inceleyelim.`);
       setMascotOpen(true);
       setDone((items) => items.includes(question.label) ? items : [...items, question.label]);
@@ -89,14 +94,25 @@ export default function Home() {
   }
 
   function next() {
-    setActive((value) => (value + 1) % scenarios.length);
+    if (!isCorrect || completed) return;
+    if (questionIndex === scenarios.length - 1) {
+      setCompleted(true);
+      setMessage("Etkinliği tamamladın! Dört örneği de doğru yapı basamağıyla eşleştirdin. Öğretmenin ilerlemeni görebilir.");
+      setMascotOpen(true);
+      return;
+    }
+    const nextIndex = questionIndex + 1;
+    setQuestionIndex(nextIndex);
+    setStageIndex(nextIndex);
     setSelected(null);
     setAttempts(0);
+    setIsCorrect(false);
+    setMascotOpen(false);
     setMessage("Yeni bir canlılık örneği geliyor. Önce modeldeki yerini tahmin et!");
   }
 
   return (
-    <main className="app-shell">
+    <main className={`app-shell ${mascotOpen ? "assistant-open" : ""}`}>
       <header className="topbar">
         <a className="brand" href="#" aria-label="ModAi Fen ana sayfa">
           <span className="brand-mark">M</span>
@@ -131,18 +147,18 @@ export default function Home() {
             <div className="model-top"><span>Model üzerinde incele</span><small>Bir basamağa dokun</small></div>
             <div className="stage-row">
               {stages.map((stage, index) => <div className="stage-wrap" key={stage.id}>
-                <button className={`stage ${active === index ? "selected" : ""}`} onClick={() => setActive(index)} aria-label={`${stage.label} basamağını incele`}><span className={`stage-icon s${index}`}>{stage.icon}</span><b>{stage.label}</b><small>{stage.note}</small></button>
+                <button className={`stage ${stageIndex === index ? "selected" : ""}`} onClick={() => setStageIndex(index)} aria-label={`${stage.label} basamağını incele`}><span className={`stage-icon s${index}`}>{stage.icon}</span><b>{stage.label}</b><small>{stage.note}</small></button>
                 {index < stages.length - 1 && <span className="arrow">→</span>}
               </div>)}
             </div>
-            <div className="explain"><span className="explain-icon">{stages[active].icon}</span><div><small>{stages[active].label.toUpperCase()} BASAMAĞI</small><p><b>{stages[active].label}</b>, {stages[active].note.toLocaleLowerCase("tr-TR")}. Her basamak bir öncekinden oluşur ve canlılığın devamı için birlikte çalışır.</p></div></div>
+            <div className="explain"><span className="explain-icon">{stages[stageIndex].icon}</span><div><small>{stages[stageIndex].label.toUpperCase()} BASAMAĞI</small><p><b>{stages[stageIndex].label}</b>, {stages[stageIndex].note.toLocaleLowerCase("tr-TR")}. Her basamak bir öncekinden oluşur ve canlılığın devamı için birlikte çalışır.</p></div></div>
           </div>
 
           <div className="challenge">
-            <div className="challenge-copy"><span className="question-no">SORU {active + 1}/4</span><h2>“{question.label}” hangi yapı basamağıdır?</h2><p>Modeli incele ve en uygun seçeneği işaretle.</p><div className="answers">{["Hücre", "Doku", "Organ", "Sistem"].map((answer) => <button key={answer} onClick={() => choose(answer)} className={`${selected === answer ? "picked" : ""} ${selected === answer && answer === question.type ? "correct" : ""}`}>{answer}<span>{selected === answer ? (answer === question.type ? "✓" : "×") : ""}</span></button>)}</div></div>
+            <div className="challenge-copy"><span className="question-no">SORU {questionIndex + 1}/{scenarios.length}</span><h2>“{question.label}” hangi yapı basamağıdır?</h2><p>{isCorrect ? "Doğru cevap! Şimdi sonraki örneğe ilerleyebilirsin." : "Modeli incele ve en uygun seçeneği işaretle."}</p><div className="answers">{["Hücre", "Doku", "Organ", "Sistem"].map((answer) => <button key={answer} disabled={isCorrect || completed} onClick={() => choose(answer)} className={`${selected === answer ? "picked" : ""} ${selected === answer && answer === question.type ? "correct" : ""} ${selected === answer && answer !== question.type ? "wrong" : ""}`}>{answer}<span>{selected === answer ? (answer === question.type ? "✓" : "×") : ""}</span></button>)}</div></div>
             <div className="example-card"><div className="mini-cells"><i /><i /><i /><i /><i /><i /><i /><i /><i /></div><b>{question.label}</b><small>Yakından görünüm • Temsili model</small></div>
           </div>
-          <button className="next-button" onClick={next}>Sonraki örnek <span>→</span></button>
+          <button className="next-button" onClick={next} disabled={!isCorrect || completed}>{completed ? "Etkinlik tamamlandı" : isCorrect && questionIndex === scenarios.length - 1 ? "Etkinliği tamamla" : isCorrect ? "Sonraki örnek" : "İlerlemek için doğru cevabı bul"} {!completed && <span>→</span>}</button>
         </section>
       </div>
 
