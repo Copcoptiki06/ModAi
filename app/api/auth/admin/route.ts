@@ -15,7 +15,7 @@ function equal(a: Uint8Array, b: Uint8Array) {
 export async function POST(request: Request) {
   const { username, password } = await request.json() as { username?: string; password?: string };
   const values = env as unknown as Record<string, unknown>;
-  const validUser = String(values.ADMIN_USERNAME ?? "") === (username ?? "").trim();
+  const validUser = String(values.ADMIN_USERNAME ?? "").toLocaleLowerCase("tr-TR") === (username ?? "").trim().toLocaleLowerCase("tr-TR");
   const validPassword = equal(await digest(password ?? ""), await digest(String(values.ADMIN_PASSWORD ?? "")));
   if (!validUser || !validPassword) return Response.json({ error: "Kullanıcı adı veya şifre hatalı." }, { status: 401 });
   const token = await createSession({ role: "admin", name: "Admin" });
