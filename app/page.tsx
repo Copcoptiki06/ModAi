@@ -65,7 +65,7 @@ const adminQuestions = [
 ];
 
 const builtInScienceImages = [
-  { key:"plant-cell", name:"Bitki hücresi", grade:"7. sınıf", unit:"Canlılarda Üreme, Büyüme ve Gelişme", url:"/question-images/plant-cell.png" },
+  { key:"plant-cell", name:"Bitki hücresi", grade:"5. sınıf", unit:"Canlıların Yapısına Yolculuk", url:"/question-images/plant-cell.png" },
   { key:"refraction", name:"Işığın kırılması", grade:"7. sınıf", unit:"Işığın Kırılması", url:"/question-images/refraction-air-glass.png" },
   { key:"cell-hierarchy", name:"Hücre–doku–organ–sistem–organizma", grade:"5. sınıf", unit:"Canlıların Yapısına Yolculuk", url:"/question-images/cell-hierarchy.png" },
   { key:"solar-system", name:"Güneş sistemi genel görünümü", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/solar-system.png" },
@@ -107,7 +107,13 @@ const forceScienceImages = [
   ["Sürtünmeyi artırma","increase-friction"], ["Sürtünmeyi azaltma","reduce-friction"],
 ].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Kuvveti Tanıyalım",url:`/question-images/verified/grade5-force/${file}.png`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages];
+const cellScienceImages = [
+  ["Hayvan hücresi","animal-cell"], ["Hücre zarı","cell-membrane"], ["Sitoplazma","cytoplasm"],
+  ["Çekirdek","cell-nucleus"], ["Kemik","bone"], ["Eklem","joint"], ["Kas","muscle"],
+  ["İskelet modeli","skeleton"], ["Destek ve hareket sistemi sağlığı","movement-health"],
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Canlıların Yapısına Yolculuk",url:`/question-images/verified/grade5-cell/${file}.png`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/")||url.includes("/variants/"))return undefined;const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}

@@ -13,7 +13,10 @@ for source in sources:
     target_dir.mkdir(parents=True, exist_ok=True)
     with Image.open(source).convert("RGB") as image:
         for suffix, size in SIZES.items():
+            target = target_dir / f"{source.stem}-{suffix}.webp"
+            if target.exists() and target.stat().st_mtime >= source.stat().st_mtime:
+                continue
             fitted = ImageOps.fit(image, size, method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
-            fitted.save(target_dir / f"{source.stem}-{suffix}.webp", "WEBP", quality=84, method=6)
+            fitted.save(target, "WEBP", quality=84, method=6)
 
 print(f"{len(list(SOURCE.glob('*.png')))} kaynak için {len(SIZES)} boyut üretildi.")
