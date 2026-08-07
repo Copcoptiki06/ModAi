@@ -1,6 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+type InstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+};
 
 const stages = [
   { id: "cell", label: "Hücre", icon: "◉", note: "Canlıların en küçük yapı birimi" },
@@ -29,6 +34,38 @@ export default function Home() {
   const [attempts, setAttempts] = useState(0);
   const [message, setMessage] = useState("Merhaba Ece! Maarif Modeli öğrenme çıktımıza uygun olarak önce bildiklerinle yeni model arasında bağ kuralım: Bir bina tuğlalardan oluşuyorsa canlılar hangi küçük birimlerden oluşur?");
   const [done, setDone] = useState<string[]>([]);
+  const [installPrompt, setInstallPrompt] = useState<InstallPromptEvent | null>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => undefined);
+    setIsInstalled(window.matchMedia("(display-mode: standalone)").matches);
+
+    const onInstallPrompt = (event: Event) => {
+      event.preventDefault();
+      setInstallPrompt(event as InstallPromptEvent);
+    };
+    const onInstalled = () => {
+      setIsInstalled(true);
+      setInstallPrompt(null);
+    };
+    window.addEventListener("beforeinstallprompt", onInstallPrompt);
+    window.addEventListener("appinstalled", onInstalled);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", onInstallPrompt);
+      window.removeEventListener("appinstalled", onInstalled);
+    };
+  }, []);
+
+  async function installApp() {
+    if (installPrompt) {
+      await installPrompt.prompt();
+      const choice = await installPrompt.userChoice;
+      if (choice.outcome === "accepted") setInstallPrompt(null);
+      return;
+    }
+    setMessage("Uygulamayı yüklemek için tarayıcı menüsünden ‘Uygulamayı yükle’ veya ‘Ana ekrana ekle’ seçeneğine dokunabilirsin.");
+  }
 
   const question = scenarios[active % scenarios.length];
   const progress = useMemo(() => Math.min(100, 24 + done.length * 14), [done]);
@@ -62,7 +99,7 @@ export default function Home() {
           <span><b>MARİF</b><small>MODEL FEN</small></span>
         </a>
         <div className="lesson-title"><span>5. SINIF • 3. ÜNİTE</span><strong>Canlıların Yapısına Yolculuk</strong></div>
-        <div className="student"><span className="student-avatar">E</span><span><b>Ece Yılmaz</b><small>5-A Sınıfı</small></span><button aria-label="Öğrenci menüsünü aç">⌄</button></div>
+        <div className="student"><button className="install-button" onClick={installApp} disabled={isInstalled}>{isInstalled ? "Yüklendi" : "Uygulamayı yükle"}</button><span className="student-avatar">E</span><span><b>Ece Yılmaz</b><small>5-A Sınıfı</small></span><button aria-label="Öğrenci menüsünü aç">⌄</button></div>
       </header>
 
       <section className="lesson-bar">

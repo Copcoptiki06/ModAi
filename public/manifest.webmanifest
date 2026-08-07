@@ -1,0 +1,16 @@
+{
+  "name": "ModAi Fen — Canlıların Yapısına Yolculuk",
+  "short_name": "ModAi Fen",
+  "description": "5. sınıf Fen Bilimleri için Maarif Modeli öncelikli etkileşimli öğrenme uygulaması.",
+  "lang": "tr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f6f1e5",
+  "theme_color": "#123f31",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
