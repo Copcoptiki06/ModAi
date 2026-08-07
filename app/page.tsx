@@ -35,6 +35,28 @@ const studentOverview = [
   { name: "Mert Can", className: "7-B", progress: 48, correct: 10, wrong: 9, time: "28 dk", need: "Kırılma yönü" },
 ];
 
+const topicInsights = [
+  { topic: "Normal ile yüzeyi karıştırma", students: 14, rate: 29 },
+  { topic: "Yoğun ortama geçişte kırılma yönü", students: 11, rate: 23 },
+  { topic: "Gelme açısını yüzeye göre ölçme", students: 9, rate: 19 },
+  { topic: "Tam yansıma ve sınır açısı", students: 7, rate: 15 },
+];
+
+const aiUsage = [
+  { name: "Ece Yılmaz", uses: 8, benefit: 75, afterHelp: "6/8 doğru", focus: "Normal çizgisi" },
+  { name: "Arda Demir", uses: 14, benefit: 64, afterHelp: "9/14 doğru", focus: "Ortam yoğunluğu" },
+  { name: "Elif Kaya", uses: 4, benefit: 100, afterHelp: "4/4 doğru", focus: "Tam yansıma" },
+  { name: "Mert Can", uses: 17, benefit: 47, afterHelp: "8/17 doğru", focus: "Kırılma yönü" },
+];
+
+const activityLogs = [
+  { time: "10:42", student: "Ece Yılmaz", event: "ModAi ipucu istedi", detail: "Normal çizgisini bulma", result: "Sonraki deneme doğru" },
+  { time: "10:38", student: "Mert Can", event: "Yanlış cevap", detail: "Camdan havaya geçiş", result: "2. ipucu gösterildi" },
+  { time: "10:31", student: "Arda Demir", event: "Etkinlik tamamladı", detail: "Işığın kırılması • 4 soru", result: "%75 başarı" },
+  { time: "10:24", student: "Elif Kaya", event: "ModAi örneği açtı", detail: "Bisiklet–kum benzetmesi", result: "18 sn inceledi" },
+  { time: "10:17", student: "Mert Can", event: "Aynı hatayı tekrarladı", detail: "Normale yaklaşma", result: "Öğretmen uyarısı önerildi" },
+];
+
 export default function Home() {
   const [view, setView] = useState<"login" | "teacher" | "student">("login");
   const [loginRole, setLoginRole] = useState<"teacher" | "student">("teacher");
@@ -196,6 +218,14 @@ export default function Home() {
     <main className="teacher-shell">
       <header className="teacher-header"><div className="auth-brand"><span className="brand-mark">M</span><div><b>MODAI</b><small>ÖĞRETMEN PANELİ</small></div></div><div><span>Seda Hoca</span><button onClick={logout}>Çıkış yap</button></div></header>
       <div className="teacher-layout"><aside className="teacher-nav"><button className="active">Genel bakış</button><button>Sınıflarım</button><button>Öğrenciler</button><button>İçerik yönetimi</button><button>Bildirim gönder</button></aside><section className="teacher-main"><div className="teacher-title"><div><p>7 AĞUSTOS 2026</p><h1>Öğrenci ilerleme merkezi</h1><span>Tüm sınıflarını ve öğrencilerinin ihtiyaçlarını tek ekrandan izle.</span></div><button>+ Yeni sınıf oluştur</button></div><div className="metric-grid"><article><span>Toplam öğrenci</span><b>48</b><small>4 sınıfta</small></article><article><span>Ortalama ilerleme</span><b>%69</b><small>Bu hafta +%8</small></article><article><span>Tamamlanan etkinlik</span><b>126</b><small>Son 7 gün</small></article><article><span>Desteğe ihtiyaç duyan</span><b>7</b><small>İncelenmeli</small></article></div><div className="teacher-section"><div className="section-head"><div><h2>Öğrenci durumu</h2><p>Doğru, yanlış, süre ve ihtiyaç duyulan konular</p></div><select aria-label="Sınıf seç"><option>Tüm sınıflar</option><option>5-A</option><option>5-B</option></select></div><div className="student-table"><div className="table-row table-head"><span>Öğrenci</span><span>İlerleme</span><span>Doğru / Yanlış</span><span>Çalışma</span><span>ModAi gözlemi</span></div>{studentOverview.map((student) => <div className="table-row" key={student.name}><span><b>{student.name}</b><small>{student.className}</small></span><span><i><em style={{ width: `${student.progress}%` }} /></i><b>%{student.progress}</b></span><span><b className="ok">{student.correct}</b> / <b className="bad">{student.wrong}</b></span><span>{student.time}</span><span>{student.need}<button>Ayrıntı</button></span></div>)}</div></div></section></div>
+      <section className="analytics-wrap">
+        <div className="analytics-grid">
+          <article className="insight-card"><div className="analytics-title"><div><span>SINIF GENELİ</span><h2>En çok takılınan noktalar</h2></div><b>Son 7 gün</b></div><div className="topic-list">{topicInsights.map((item) => <div key={item.topic}><p><span>{item.topic}</span><b>{item.students} öğrenci</b></p><i><em style={{ width: `${item.rate * 2.4}%` }} /></i><small>Öğrencilerin %{item.rate}&apos;i bu noktada en az iki hata yaptı.</small></div>)}</div></article>
+          <article className="insight-card ai-impact"><div className="analytics-title"><div><span>MODAI ETKİSİ</span><h2>Yapay zekâdan faydalanma</h2></div><b>%67 etkili</b></div><div className="impact-number"><strong>43</strong><p>Bu hafta gösterilen ipucu<small>29 ipucundan sonra öğrenci sonraki denemede doğru cevap verdi.</small></p></div><div className="impact-split"><span><b>11</b>örnek açıklama</span><span><b>8</b>öğretmen incelemesi</span><span><b>3,4</b>ortalama ipucu</span></div></article>
+        </div>
+        <article className="analytics-panel"><div className="analytics-title"><div><span>ÖĞRENCİ BAZINDA</span><h2>ModAi kullanım ve fayda analizi</h2></div><button>Raporu indir</button></div><div className="ai-table"><div className="ai-row ai-head"><span>Öğrenci</span><span>ModAi kullanımı</span><span>İpucu sonrası</span><span>Fayda oranı</span><span>En çok destek aldığı konu</span></div>{aiUsage.map((item) => <div className="ai-row" key={item.name}><span><b>{item.name}</b></span><span>{item.uses} etkileşim</span><span>{item.afterHelp}</span><span><i><em style={{ width: `${item.benefit}%` }} /></i><b>%{item.benefit}</b></span><span>{item.focus}</span></div>)}</div></article>
+        <article className="analytics-panel"><div className="analytics-title"><div><span>CANLI AKIŞ</span><h2>Öğrenme ve müdahale logları</h2></div><button>Tüm logları gör</button></div><div className="log-list">{activityLogs.map((log, index) => <div className="log-row" key={`${log.time}-${log.student}`}><time>{log.time}</time><span className={`log-dot l${index}`} /><span><b>{log.student}</b><small>{log.event}</small></span><span>{log.detail}</span><strong>{log.result}</strong></div>)}</div></article>
+      </section>
     </main>
   );
 
