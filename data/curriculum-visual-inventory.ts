@@ -1,0 +1,38 @@
+export const curriculumVisualInventory = {
+  5: {
+    "Gökyüzündeki Komşularımız ve Biz": ["Güneş yapısı", "Güneş'in dönmesi", "Ay yüzeyi", "Ay'ın dönmesi", "Ay'ın dolanması", "Ay'ın ana evreleri", "Ay'ın ara evreleri", "Güneş-Dünya-Ay hareket modeli", "Güneş-Dünya-Ay büyüklük karşılaştırması"],
+    "Kuvveti Tanıyalım": ["Kuvvet yönü", "Kuvvet büyüklüğü", "Dinamometre", "Dinamometre ölçeği", "Kütle", "Ağırlık", "Yer çekimi", "Sürtünme kuvveti", "Hava direnci", "Su direnci", "Sürtünmeyi artırma", "Sürtünmeyi azaltma"],
+    "Canlıların Yapısına Yolculuk": ["Bitki hücresi", "Hayvan hücresi", "Hücre zarı", "Sitoplazma", "Çekirdek", "Hücre-doku-organ-sistem-organizma", "Kemik", "Eklem", "Kas", "İskelet modeli", "Destek ve hareket sistemi sağlığı"],
+    "Işığın Dünyası": ["Noktasal ışık kaynağı", "Işığın doğrusal yayılması", "Saydam madde", "Yarı saydam madde", "Opak madde", "Tam gölge", "Gölge boyu", "Işık kaynağı-cisim-perde modeli"],
+    "Maddenin Doğası": ["Katı tanecik modeli", "Sıvı tanecik modeli", "Gaz tanecik modeli", "Isı", "Sıcaklık", "Termometre", "Isı alışverişi", "Erime", "Donma", "Buharlaşma", "Yoğuşma", "Isı iletkeni", "Isı yalıtkanı", "Isı yalıtım modeli"],
+    "Yaşamımızdaki Elektrik": ["Pil", "Lamba", "Duy", "Anahtar", "Bağlantı kablosu", "Devre sembolleri", "Kurulu devre", "Devre şeması", "Açık devre", "Kapalı devre", "Pil sayısı-parlaklık", "Lamba sayısı-parlaklık"],
+    "Sürdürülebilir Yaşam ve Geri Dönüşüm": ["Kâğıt atık", "Cam atık", "Metal atık", "Plastik atık", "Organik atık", "Elektronik atık", "Geri dönüşüm kutuları", "Yeniden kullanım", "İleri dönüşüm", "Atık yönetimi akış şeması"],
+  },
+  6: {
+    "Güneş Sistemi ve Tutulmalar": ["Güneş sistemi", "Merkür", "Venüs", "Dünya", "Mars", "Jüpiter", "Satürn", "Uranüs", "Neptün", "İç gezegenler", "Dış gezegenler", "Asteroit kuşağı", "Güneş tutulması", "Ay tutulması"],
+    "Kuvvetin Etkisinde Hareket": ["Aynı yönlü kuvvetler", "Zıt yönlü kuvvetler", "Bileşke kuvvet", "Dengelenmiş kuvvet", "Dengelenmemiş kuvvet", "Sürat", "Hız", "Yol-zaman grafiği"],
+    "Canlılarda Sistemler": ["Eşeyli üreme", "Eşeysiz üreme", "Çiçeğin kısımları", "Tozlaşma", "Döllenme", "Tohum", "Çimlenme", "Başkalaşım", "İnsan üreme sistemi", "Beyin", "Omurilik", "Sinirler", "İç salgı bezleri", "Ergenlik değişimleri"],
+    "Işığın Yansıması ve Renkler": ["Düzgün yansıma", "Dağınık yansıma", "Gelen ışın", "Yansıyan ışın", "Normal", "Düz ayna", "Çukur ayna", "Tümsek ayna", "Işığın soğurulması", "Beyaz ışık tayfı", "Renkli cisimlerin görünmesi", "Güneş enerjisi uygulamaları"],
+    "Maddenin Ayırt Edici Özellikleri": ["Genleşme", "Büzülme", "Erime noktası", "Donma noktası", "Kaynama noktası", "Kütle-hacim", "Yoğunluk", "Yoğunluk kabı", "Buzun suda yüzmesi", "Yoğunluk modeli"],
+    "Elektriğin İletimi ve Direnç": ["İletken madde", "Yalıtkan madde", "İletkenlik deney düzeneği", "Direnç", "Tel uzunluğu", "Tel kalınlığı", "Tel cinsi", "Ayarlanabilir direnç", "Parlaklık değişimi"],
+    "Sürdürülebilir Yaşam ve Etkileşim": ["Biyoçeşitlilik", "Habitat", "Nesli tehlikedeki canlı", "İstilacı tür", "Hava kirliliği", "Yakıt türleri", "Çevre problemi", "Çözüm modeli"],
+  },
+  7: {
+    "Uzay Çağı": ["Roket", "Yapay uydu", "Uzay sondası", "Uzay istasyonu", "Uzay teleskobu", "Optik teleskop", "Radyo teleskop", "Uzay kirliliği", "Yıldız oluşumu", "Yıldız yaşam döngüsü", "Galaksi", "Evren"],
+    "Kuvvet ve Enerjiyi Keşfedelim": ["Fiziksel iş", "Kuvvet-yol ilişkisi", "Kinetik enerji", "Çekim potansiyel enerjisi", "Esneklik potansiyel enerjisi", "Enerji dönüşümü", "Enerji korunumu", "Sürtünme ve enerji"],
+    "Vücudumuzdaki Sistemler": ["Ağız", "Yutak", "Yemek borusu", "Mide", "İnce bağırsak", "Kalın bağırsak", "Karaciğer", "Pankreas", "Kalp", "Damarlar", "Kan hücreleri", "Akciğer", "Soluk borusu", "Böbrek", "Üreter", "Mesane", "Sindirim sistemi", "Dolaşım sistemi", "Solunum sistemi", "Boşaltım sistemi"],
+    "Işığın Kırılması ve Mercekler": ["Normal", "Gelme açısı", "Kırılma açısı", "Az yoğundan çok yoğuna geçiş", "Çok yoğundan az yoğuna geçiş", "İnce kenarlı mercek", "Kalın kenarlı mercek", "Odak noktası", "Büyüteç", "Gözlük", "Kamera", "Teleskop"],
+    "Maddenin Doğasına Yolculuk": ["Atom", "Proton", "Nötron", "Elektron", "Atom modelleri", "Molekül", "Elektron dizilimi", "Element", "Bileşik", "İlk 18 element", "Grup", "Periyot", "Homojen karışım", "Heterojen karışım", "Çözünme", "Eleme", "Süzme", "Buharlaştırma", "Mıknatısla ayırma", "Damıtma"],
+    "Elektriklenme": ["Sürtünme ile elektriklenme", "Dokunma ile elektriklenme", "Etki ile elektriklenme", "Pozitif yük", "Negatif yük", "Nötr cisim", "Aynı yüklerin itmesi", "Zıt yüklerin çekmesi", "Elektroskop"],
+    "Sürdürülebilir Yaşama Doğru": ["Üretici", "Tüketici", "Ayrıştırıcı", "Besin zinciri", "Besin ağı", "Enerji piramidi", "Su tasarrufu", "Enerji tasarrufu", "Kaynak tasarrufu"],
+  },
+  8: {
+    "Mevsimler ve İklim": ["Dünya'nın eksen eğikliği", "Dünya'nın dolanması", "Mevsim oluşumu", "Güneş ışınlarının geliş açısı", "Gece-gündüz süreleri", "Hava olayı", "İklim", "Meteoroloji", "Klimatoloji"],
+    "Kuvvetten Makineye": ["Sabit makara", "Hareketli makara", "Palanga", "Kaldıraç", "Eğik düzlem", "Çıkrık", "Vida", "Dişli çark", "Kasnak", "Basit makine birleşimi"],
+    "Yaşamın Gizemi": ["Nükleotid", "Gen", "DNA", "Kromozom", "DNA eşlenmesi", "Mitoz evreleri", "Mayoz evreleri", "Kalıtım", "Baskın gen", "Çekinik gen", "Çaprazlama", "Akraba evliliği", "Mutasyon", "Modifikasyon", "Adaptasyon"],
+    "Sesin Dünyası": ["Titreşen ses kaynağı", "Ses dalgası", "Katıda ses", "Sıvıda ses", "Gazda ses", "Frekans", "İnce ses", "Kalın ses", "Genlik", "Ses şiddeti", "Sesin yansıması", "Sesin soğurulması", "Ses yalıtımı", "Ses kirliliği"],
+    "Periyodik Tablo ve Maddenin Etkileşimi": ["Metal", "Ametal", "Yarımetal", "Soy gaz", "Fiziksel değişim", "Kimyasal değişim", "Kimyasal tepkime", "Asit", "Baz", "Ayıraç", "pH ölçeği", "Asit-metal etkileşimi", "Asit-mermer etkileşimi"],
+    "Elektriğin Yolculuğu": ["Seri bağlı devre", "Paralel bağlı devre", "Ampermetre", "Voltmetre", "Akım", "Gerilim", "Direnç", "Ohm ilişkisi", "Aydınlatma aracı", "Elektrikten ısı", "Elektrikten ışık", "Elektrikten ses", "Elektrikten hareket", "Termik santral", "Hidroelektrik santral", "Rüzgâr santrali", "Güneş santrali", "Nükleer santral"],
+    "Sürdürülebilir Yaşam ve Madde Döngüleri": ["Fotosentez", "Fotosentez deney düzeneği", "Solunum", "Karbon döngüsü", "Su döngüsü", "Azot döngüsü", "Oksijen döngüsü", "Küresel iklim değişikliği", "Sera etkisi", "Kuraklık", "Sel", "Buzul erimesi"],
+  },
+} as const;
