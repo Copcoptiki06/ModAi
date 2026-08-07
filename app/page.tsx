@@ -86,15 +86,12 @@ const builtInScienceImages = [
   { key:"closed-circuit", name:"Kapalı devre", grade:"5. sınıf", unit:"Yaşamımızdaki Elektrik", url:"/question-images/closed-circuit.png" },
 ];
 
-const curriculumScienceImages = (() => {
-  const images:Array<{key:string;name:string;grade:string;unit:string;url:string}>=[];
-  let index=0;
-  Object.entries(curriculumVisualInventory).forEach(([grade,units]) => Object.entries(units).forEach(([unit,concepts]) => (concepts as readonly string[]).forEach(name => {
-    index+=1;
-    images.push({key:`curriculum-${grade}-${index}`,name,grade:`${grade}. sınıf`,unit,url:`/question-images/curriculum/g${grade}-${String(index).padStart(3,"0")}.png`});
-  })));
-  return images;
-})();
+const curriculumScienceImages = [
+  ["Normal","normal"], ["Gelme açısı","incidence-angle"], ["Kırılma açısı","refraction-angle"],
+  ["Az yoğundan çok yoğuna geçiş","air-to-glass"], ["Çok yoğundan az yoğuna geçiş","glass-to-air"],
+  ["İnce kenarlı mercek","convex-lens"], ["Kalın kenarlı mercek","concave-lens"], ["Odak noktası","focal-point"],
+  ["Büyüteç","magnifier"], ["Gözlük","eyeglasses"], ["Kamera","camera"], ["Teleskop","telescope"],
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"7. sınıf",unit:"Işığın Kırılması ve Mercekler",url:`/question-images/verified/${file}.png`}));
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/")||url.includes("/variants/"))return undefined;const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
@@ -395,6 +392,8 @@ export default function Home() {
             </div>
             <div className="explain"><span className="explain-icon">{stages[stageIndex].icon}</span><div><small>{stages[stageIndex].label.toUpperCase()} BÖLÜMÜ</small><p><b>{stages[stageIndex].label}</b>, {stages[stageIndex].note.toLocaleLowerCase("tr-TR")}. Işının izlediği yolu yorumlarken açılar her zaman normal çizgisine göre ölçülür.</p></div></div>
           </div>
+
+          <section className="lesson-visuals"><div><p className="eyebrow">KONU GÖRSELLERİ</p><h2>Işığın kırılması ve mercekleri görerek incele</h2></div><div className="lesson-visual-grid">{curriculumScienceImages.map(image=><figure key={image.key}><img src={image.url} srcSet={scienceImageSrcSet(image.url)} sizes="(max-width: 700px) 100vw, 360px" alt={image.name}/><figcaption>{image.name}</figcaption></figure>)}</div></section>
 
           <div className="challenge">
             <div className="challenge-copy"><span className="question-no">SORU {questionIndex + 1}/{scenarios.length}</span><h2>“{question.label}” durumunda ışın nasıl davranır?</h2><p>{isCorrect ? "Doğru cevap! Şimdi sonraki örneğe ilerleyebilirsin." : "Ortamları ve normal çizgisini inceleyerek en uygun seçeneği işaretle."}</p><div className="answers">{["Normale yaklaşır", "Normalden uzaklaşır", "Doğrultusu değişmez", "Yansıyarak geri döner"].map((answer) => <button key={answer} disabled={isCorrect || completed} onClick={() => choose(answer)} className={`${selected === answer ? "picked" : ""} ${selected === answer && answer === question.type ? "correct" : ""} ${selected === answer && answer !== question.type ? "wrong" : ""}`}>{answer}<span>{selected === answer ? (answer === question.type ? "✓" : "×") : ""}</span></button>)}</div></div>
