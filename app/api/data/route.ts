@@ -32,10 +32,11 @@ export async function GET(request: Request) {
   if (session.role === "teacher") {
     const owner = session.username || "Sedahoca";
     const classes = await store.prepare("SELECT * FROM classes WHERE teacher_username = ? ORDER BY id DESC").bind(owner).all();
-    const students = await store.prepare("SELECT u.id,u.username,u.name,u.created_at,e.class_id FROM users u LEFT JOIN enrollments e ON e.student_username=u.username WHERE u.role='student' AND u.teacher_username=? ORDER BY u.id DESC").bind(owner).all();
+    const students = await store.prepare("SELECT u.id,u.username,u.name,u.created_at,e.class_id,c.name AS class_name,COUNT(a.id) AS attempt_count,COALESCE(SUM(CASE WHEN a.is_correct=1 THEN 1 ELSE 0 END),0) AS correct_count,COALESCE(SUM(CASE WHEN a.is_correct=0 THEN 1 ELSE 0 END),0) AS wrong_count,COALESCE(SUM(a.duration_seconds),0) AS duration_seconds,COALESCE(SUM(a.hints_used),0) AS hints_used FROM users u LEFT JOIN enrollments e ON e.student_username=u.username LEFT JOIN classes c ON c.id=e.class_id LEFT JOIN attempts a ON a.student_username=u.username WHERE u.role='student' AND u.teacher_username=? GROUP BY u.id,u.username,u.name,u.created_at,e.class_id,c.name ORDER BY u.id").bind(owner).all();
     const notifications = await store.prepare("SELECT * FROM notifications WHERE teacher_username=? ORDER BY id DESC").bind(owner).all();
-    const attempts = await store.prepare("SELECT a.* FROM attempts a JOIN users u ON u.username=a.student_username WHERE u.teacher_username=? ORDER BY a.id DESC LIMIT 200").bind(owner).all();
-    return Response.json({ classes: classes.results, students: students.results, notifications: notifications.results, attempts: attempts.results });
+    const attempts = await store.prepare("SELECT a.*,q.topic,q.prompt FROM attempts a JOIN users u ON u.username=a.student_username LEFT JOIN questions q ON q.id=a.question_id WHERE u.teacher_username=? ORDER BY a.id DESC LIMIT 200").bind(owner).all();
+    const ai = await store.prepare("SELECT ai.* FROM ai_interactions ai JOIN users u ON u.username=ai.student_username WHERE u.teacher_username=? ORDER BY ai.id DESC LIMIT 200").bind(owner).all();
+    return Response.json({ classes: classes.results, students: students.results, notifications: notifications.results, attempts: attempts.results, aiInteractions: ai.results });
   }
   const username = session.username || "ece5a";
   const questions = await store.prepare("SELECT id,grade,unit,topic,type,prompt,options_json,hint,image_url FROM questions WHERE status='published' ORDER BY id").all();
