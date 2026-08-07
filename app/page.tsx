@@ -28,7 +28,20 @@ const learningContext = {
   bridge: "Bir binanın tuğlalardan oluşması gibi canlılar da hücrelerden oluşur.",
 };
 
+const studentOverview = [
+  { name: "Ece Yılmaz", className: "5-A", progress: 75, correct: 18, wrong: 4, time: "42 dk", need: "Doku–organ ayrımı" },
+  { name: "Arda Demir", className: "5-A", progress: 62, correct: 14, wrong: 7, time: "35 dk", need: "Hücrenin bölümleri" },
+  { name: "Elif Kaya", className: "5-B", progress: 90, correct: 22, wrong: 2, time: "51 dk", need: "Pekiştirme önerilir" },
+  { name: "Mert Can", className: "5-B", progress: 48, correct: 10, wrong: 9, time: "28 dk", need: "Sistem–organizma ilişkisi" },
+];
+
 export default function Home() {
+  const [view, setView] = useState<"login" | "teacher" | "student">("login");
+  const [loginRole, setLoginRole] = useState<"teacher" | "student">("teacher");
+  const [authLoading, setAuthLoading] = useState(true);
+  const [loginError, setLoginError] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [stageIndex, setStageIndex] = useState(0);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -60,6 +73,58 @@ export default function Home() {
       window.removeEventListener("appinstalled", onInstalled);
     };
   }, []);
+
+  useEffect(() => {
+    fetch("/api/auth/me").then(async (response) => {
+      if (!response.ok) return;
+      const data = await response.json() as { role?: "teacher" | "student" };
+      if (data.role) setView(data.role);
+    }).finally(() => setAuthLoading(false));
+  }, []);
+
+  useEffect(() => {
+    if (view !== "login" || loginRole !== "teacher") return;
+    const clientId = "930827221578-0ealr6tjbtrc624tivunu6r24s9p3q3e.apps.googleusercontent.com";
+    const renderGoogle = () => {
+      const google = (window as unknown as { google?: { accounts: { id: { initialize: (config: unknown) => void; renderButton: (element: HTMLElement, config: unknown) => void } } } }).google;
+      const target = document.getElementById("google-teacher-login");
+      if (!google || !target) return;
+      google.accounts.id.initialize({ client_id: clientId, callback: async ({ credential }: { credential: string }) => {
+        const response = await fetch("/api/auth/google", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ credential }) });
+        const data = await response.json() as { error?: string };
+        if (!response.ok) return setLoginError(data.error || "Google girişi başarısız.");
+        setView("teacher");
+      } });
+      target.replaceChildren();
+      google.accounts.id.renderButton(target, { theme: "outline", size: "large", width: 320, text: "continue_with" });
+    };
+    const existing = document.querySelector<HTMLScriptElement>('script[src="https://accounts.google.com/gsi/client"]');
+    if (existing) renderGoogle();
+    else {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.onload = renderGoogle;
+      document.head.appendChild(script);
+    }
+  }, [view, loginRole]);
+
+  async function submitLogin(event: React.FormEvent) {
+    event.preventDefault();
+    setLoginError("");
+    const endpoint = loginRole === "teacher" ? "/api/auth/teacher" : "/api/auth/student";
+    const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, password }) });
+    const data = await response.json() as { error?: string };
+    if (!response.ok) return setLoginError(data.error || "Giriş yapılamadı.");
+    setView(loginRole);
+    setUsername("");
+    setPassword("");
+  }
+
+  async function logout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setView("login");
+  }
 
   async function installApp() {
     if (installPrompt) {
@@ -110,6 +175,29 @@ export default function Home() {
     setMascotOpen(false);
     setMessage("Yeni bir canlılık örneği geliyor. Önce modeldeki yerini tahmin et!");
   }
+
+  if (authLoading) return <main className="auth-screen"><div className="auth-card"><div className="brand-mark">M</div><h1>ModAi hazırlanıyor…</h1></div></main>;
+
+  if (view === "login") return (
+    <main className="auth-screen">
+      <section className="auth-card">
+        <div className="auth-brand"><span className="brand-mark">M</span><div><b>MODAI</b><small>FEN ÖĞRENME PLATFORMU</small></div></div>
+        <p className="auth-kicker">HOŞ GELDİNİZ</p><h1>Hesabınıza giriş yapın</h1><p className="auth-intro">Öğretmen paneline veya size özel öğrenci alanına güvenle devam edin.</p>
+        <div className="role-tabs"><button className={loginRole === "teacher" ? "active" : ""} onClick={() => { setLoginRole("teacher"); setLoginError(""); }}>Öğretmen</button><button className={loginRole === "student" ? "active" : ""} onClick={() => { setLoginRole("student"); setLoginError(""); }}>Öğrenci</button></div>
+        {loginRole === "teacher" && <><div id="google-teacher-login" className="google-login" /><div className="auth-divider"><span>veya kullanıcı adıyla</span></div></>}
+        <form className="auth-form" onSubmit={submitLogin}><label>Kullanıcı adı<input value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" placeholder={loginRole === "teacher" ? "Örn. Sedahoca" : "Öğretmeninizin verdiği kullanıcı adı"} required /></label><label>Şifre<input value={password} onChange={(event) => setPassword(event.target.value)} type="password" autoComplete="current-password" placeholder="Şifreniz" required /></label>{loginError && <p className="auth-error">{loginError}</p>}<button className="auth-submit" type="submit">{loginRole === "teacher" ? "Öğretmen paneline gir" : "Derse başla"}</button></form>
+        <small className="auth-help">Öğrenci hesapları öğretmen tarafından oluşturulur.</small>
+      </section>
+      <aside className="auth-visual"><span>5. SINIF • FEN BİLİMLERİ</span><h2>Her öğrencinin öğrenme yolculuğu görünür olsun.</h2><p>ModAi; ilerlemeyi, doğru ve yanlışları izler; öğretmene sınıf düzeyinde anlaşılır içgörüler sunar.</p><div className="auth-stats"><b>%78<small>ortalama ilerleme</small></b><b>4 sınıf<small>tek panelde</small></b></div></aside>
+    </main>
+  );
+
+  if (view === "teacher") return (
+    <main className="teacher-shell">
+      <header className="teacher-header"><div className="auth-brand"><span className="brand-mark">M</span><div><b>MODAI</b><small>ÖĞRETMEN PANELİ</small></div></div><div><span>Seda Hoca</span><button onClick={logout}>Çıkış yap</button></div></header>
+      <div className="teacher-layout"><aside className="teacher-nav"><button className="active">Genel bakış</button><button>Sınıflarım</button><button>Öğrenciler</button><button>İçerik yönetimi</button><button>Bildirim gönder</button></aside><section className="teacher-main"><div className="teacher-title"><div><p>7 AĞUSTOS 2026</p><h1>Öğrenci ilerleme merkezi</h1><span>Tüm sınıflarını ve öğrencilerinin ihtiyaçlarını tek ekrandan izle.</span></div><button>+ Yeni sınıf oluştur</button></div><div className="metric-grid"><article><span>Toplam öğrenci</span><b>48</b><small>4 sınıfta</small></article><article><span>Ortalama ilerleme</span><b>%69</b><small>Bu hafta +%8</small></article><article><span>Tamamlanan etkinlik</span><b>126</b><small>Son 7 gün</small></article><article><span>Desteğe ihtiyaç duyan</span><b>7</b><small>İncelenmeli</small></article></div><div className="teacher-section"><div className="section-head"><div><h2>Öğrenci durumu</h2><p>Doğru, yanlış, süre ve ihtiyaç duyulan konular</p></div><select aria-label="Sınıf seç"><option>Tüm sınıflar</option><option>5-A</option><option>5-B</option></select></div><div className="student-table"><div className="table-row table-head"><span>Öğrenci</span><span>İlerleme</span><span>Doğru / Yanlış</span><span>Çalışma</span><span>ModAi gözlemi</span></div>{studentOverview.map((student) => <div className="table-row" key={student.name}><span><b>{student.name}</b><small>{student.className}</small></span><span><i><em style={{ width: `${student.progress}%` }} /></i><b>%{student.progress}</b></span><span><b className="ok">{student.correct}</b> / <b className="bad">{student.wrong}</b></span><span>{student.time}</span><span>{student.need}<button>Ayrıntı</button></span></div>)}</div></div></section></div>
+    </main>
+  );
 
   return (
     <main className={`app-shell ${mascotOpen ? "assistant-open" : ""}`}>
