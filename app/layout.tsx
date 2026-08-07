@@ -1,0 +1,14 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Marif Model Fen | Canlıların Yapısına Yolculuk",
+  description: "5. sınıf Fen Bilimleri için öğretmen yönlendirmeli, etkileşimli model tabanlı öğrenme uygulaması.",
+  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
+  openGraph: { title: "Marif Model Fen", description: "Canlıların Yapısına Yolculuk", images: [{ url: "/og.png", width: 1536, height: 1024 }] },
+  twitter: { card: "summary_large_image", title: "Marif Model Fen", description: "Canlıların Yapısına Yolculuk", images: ["/og.png"] },
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="tr"><body>{children}</body></html>;
+}
