@@ -152,7 +152,7 @@ export default function Home() {
           {!mascotOpen && <span className="mascot-dot">1</span>}
         </button>
         {mascotOpen && <>
-          <div className="mascot-copy"><span className="ai-badge">MİRA • AKILLI FEN ASİSTANI</span><p>{message}</p></div>
+          <div className="mascot-copy"><span className="ai-badge">MODAI</span><p>{message}</p></div>
           <div className="mascot-actions"><button onClick={() => setMessage(`Köprü kurma örneği: ${learningContext.bridge} Tek hücre bir tuğlaya, benzer hücrelerin oluşturduğu doku ise duvara benzetilebilir. Şimdi organın binadaki karşılığını sen düşün.`)}>Örnek ver</button><button className="sound" aria-label="Maskot mesajını seslendir">♫</button><button className="close-mascot" onClick={() => setMascotOpen(false)} aria-label="Asistanı küçült">×</button></div>
         </>}
       </section>
