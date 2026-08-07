@@ -1,6 +1,6 @@
 import { env } from "cloudflare:workers";
 
-type SessionPayload = { role: "admin" | "teacher" | "student"; name: string; email?: string; exp: number };
+type SessionPayload = { role: "admin" | "teacher" | "student"; name: string; username?: string; email?: string; exp: number };
 
 function base64Url(value: string | ArrayBuffer) {
   const bytes = typeof value === "string" ? new TextEncoder().encode(value) : new Uint8Array(value);

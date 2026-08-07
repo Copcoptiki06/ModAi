@@ -18,6 +18,6 @@ export async function POST(request: Request) {
   const validUser = String(values.ADMIN_USERNAME ?? "").toLocaleLowerCase("tr-TR") === (username ?? "").trim().toLocaleLowerCase("tr-TR");
   const validPassword = equal(await digest(password ?? ""), await digest(String(values.ADMIN_PASSWORD ?? "")));
   if (!validUser || !validPassword) return Response.json({ error: "Kullanıcı adı veya şifre hatalı." }, { status: 401 });
-  const token = await createSession({ role: "admin", name: "Admin" });
+  const token = await createSession({ role: "admin", name: "Admin", username: "Admin" });
   return Response.json({ role: "admin", name: "Admin" }, { headers: { "Set-Cookie": sessionCookie(token) } });
 }

@@ -9,6 +9,6 @@ export async function POST(request: Request) {
   const profile = await response.json() as { aud?: string; email?: string; name?: string; email_verified?: string };
   const clientId = String((env as unknown as Record<string, unknown>).GOOGLE_CLIENT_ID ?? "");
   if (profile.aud !== clientId || profile.email_verified !== "true") return Response.json({ error: "Google hesabı doğrulanamadı." }, { status: 401 });
-  const token = await createSession({ role: "teacher", name: profile.name || "Öğretmen", email: profile.email });
+  const token = await createSession({ role: "teacher", name: profile.name || "Öğretmen", username: profile.email, email: profile.email });
   return Response.json({ role: "teacher", name: profile.name || "Öğretmen" }, { headers: { "Set-Cookie": sessionCookie(token) } });
 }

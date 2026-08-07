@@ -18,6 +18,6 @@ export async function POST(request: Request) {
   const validUser = String(values.TEACHER_USERNAME ?? "") === (username ?? "").trim();
   const validPassword = equal(await digest(password ?? ""), await digest(String(values.TEACHER_PASSWORD ?? "")));
   if (!validUser || !validPassword) return Response.json({ error: "Kullanıcı adı veya şifre hatalı." }, { status: 401 });
-  const token = await createSession({ role: "teacher", name: "Seda Hoca" });
+  const token = await createSession({ role: "teacher", name: "Seda Hoca", username: (username ?? "").trim() });
   return Response.json({ role: "teacher", name: "Seda Hoca" }, { headers: { "Set-Cookie": sessionCookie(token) } });
 }
