@@ -17,11 +17,17 @@ const scenarios = [
   { label: "Dolaşım sistemi", type: "Sistem", detail: "Kalp ve damarlar aynı görev için birlikte çalışır." },
 ];
 
+const maarifContext = {
+  outcome: "FB.5.3.1.2",
+  skill: "KB2.13 • Yapılandırma",
+  bridge: "Bir binanın tuğlalardan oluşması gibi canlılar da hücrelerden oluşur.",
+};
+
 export default function Home() {
   const [active, setActive] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [attempts, setAttempts] = useState(0);
-  const [message, setMessage] = useState("Merhaba Ece! Hazırsan en küçük yapı biriminden başlayalım.");
+  const [message, setMessage] = useState("Merhaba Ece! Maarif Modeli öğrenme çıktımıza uygun olarak önce bildiklerinle yeni model arasında bağ kuralım: Bir bina tuğlalardan oluşuyorsa canlılar hangi küçük birimlerden oluşur?");
   const [done, setDone] = useState<string[]>([]);
 
   const question = scenarios[active % scenarios.length];
@@ -35,8 +41,8 @@ export default function Home() {
     } else {
       setAttempts((value) => value + 1);
       const hint = attempts === 0
-        ? `Küçük bir ipucu: “${question.label}” tek bir canlı birimi mi, yoksa benzer yapıların bir araya gelmesiyle mi oluşuyor?`
-        : `Somut düşünelim: Bir duvar tek tuğla değildir. Benzer çok sayıda tuğla yan yana gelince duvar oluşur. ${question.label} bu örnekte hangisine benziyor?`;
+        ? `Maarif Modeli ipucu: Önce yapılar arasındaki hiyerarşiyi ortaya çıkaralım. “${question.label}” tek bir canlı birimi mi, yoksa benzer yapıların bir araya gelmesiyle mi oluşuyor?`
+        : `Maarif Modeli köprü kurma örneği: Bir duvar tek tuğla değildir. Benzer çok sayıda tuğla yan yana gelince duvar oluşur. ${question.label} bu örnekte hangisine benziyor?`;
       setMessage(hint);
     }
   }
@@ -78,7 +84,7 @@ export default function Home() {
         </aside>
 
         <section className="content">
-          <div className="intro"><div><p className="eyebrow">ETKİLEŞİMLİ MODEL</p><h1>Küçükten büyüğe,<br /><em>canlılığın basamakları</em></h1><p>Bir canlının oluşumunda yapılar nasıl bir araya geliyor? Basamaklara dokun, bağlantıyı keşfet.</p></div><div className="goal"><span>🎯</span><div><small>ÖĞRENME HEDEFİ</small><b>Hücre–doku–organ–sistem–organizma ilişkisini açıklar.</b></div></div></div>
+          <div className="intro"><div><p className="eyebrow">ETKİLEŞİMLİ MODEL</p><h1>Küçükten büyüğe,<br /><em>canlılığın basamakları</em></h1><p>Bir canlının oluşumunda yapılar nasıl bir araya geliyor? Basamaklara dokun, bağlantıyı keşfet.</p></div><div className="goal"><span>🎯</span><div><small>MAARİF MODELİ • {maarifContext.outcome}</small><b>Hücre–doku–organ–sistem–organizma kavramlarını yapılandırır.</b><em>{maarifContext.skill}</em></div></div></div>
 
           <div className="model-card">
             <div className="model-top"><span>Model üzerinde incele</span><small>Bir basamağa dokun</small></div>
@@ -101,8 +107,8 @@ export default function Home() {
 
       <section className="mascot-bar" aria-live="polite">
         <div className="mascot"><div className="antenna" /><div className="face"><i /><i /><span>⌣</span></div></div>
-        <div className="mascot-copy"><span className="ai-badge">MİRA • ÖĞRENME ASİSTANI</span><p>{message}</p></div>
-        <div className="mascot-actions"><button onClick={() => setMessage(`Örnek: Tek bir kas hücresi bir oyuncuya; kas dokusu ise aynı görevi yapan oyunculardan oluşan bir takıma benzer.`)}>Bir örnek ver</button><button className="sound" aria-label="Maskot mesajını seslendir">♫</button></div>
+        <div className="mascot-copy"><span className="ai-badge">MİRA • MAARİF MODELİ ÖNCELİKLİ ASİSTAN</span><p>{message}</p></div>
+        <div className="mascot-actions"><button onClick={() => setMessage(`Maarif Modeli köprü kurma örneği: ${maarifContext.bridge} Tek hücre bir tuğlaya, benzer hücrelerin oluşturduğu doku ise duvara benzetilebilir. Şimdi organın binadaki karşılığını sen düşün.`)}>Maarif örneği ver</button><button className="sound" aria-label="Maskot mesajını seslendir">♫</button></div>
       </section>
     </main>
   );
