@@ -64,10 +64,24 @@ const adminQuestions = [
 ];
 
 const builtInScienceImages = [
-  { key:"refraction", name:"Işığın kırılması", grade:"7. sınıf", url:"/question-images/refraction-air-glass.png" },
-  { key:"cell-hierarchy", name:"Canlıların yapı basamakları", grade:"5. sınıf", url:"/question-images/cell-hierarchy.png" },
-  { key:"solar-system", name:"Güneş sistemi", grade:"6. sınıf", url:"/question-images/solar-system.png" },
-  { key:"electric-circuit", name:"Elektrik devresi", grade:"5. sınıf", url:"/question-images/electric-circuit.png" },
+  { key:"refraction", name:"Işığın kırılması", grade:"7. sınıf", unit:"Işığın Kırılması", url:"/question-images/refraction-air-glass.png" },
+  { key:"cell-hierarchy", name:"Hücre–doku–organ–sistem–organizma", grade:"5. sınıf", unit:"Canlıların Yapısına Yolculuk", url:"/question-images/cell-hierarchy.png" },
+  { key:"solar-system", name:"Güneş sistemi genel görünümü", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/solar-system.png" },
+  { key:"mercury", name:"Merkür", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/mercury.png" },
+  { key:"venus", name:"Venüs", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/venus.png" },
+  { key:"earth", name:"Dünya", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/earth.png" },
+  { key:"mars", name:"Mars", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/mars.png" },
+  { key:"jupiter", name:"Jüpiter", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/jupiter.png" },
+  { key:"saturn", name:"Satürn", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/saturn.png" },
+  { key:"uranus", name:"Uranüs", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/uranus.png" },
+  { key:"neptune", name:"Neptün", grade:"6. sınıf", unit:"Güneş Sistemi ve Tutulmalar", url:"/question-images/neptune.png" },
+  { key:"electric-circuit", name:"Kurulu basit elektrik devresi", grade:"5. sınıf", unit:"Yaşamımızdaki Elektrik", url:"/question-images/electric-circuit.png" },
+  { key:"bulb", name:"Lamba (ampul)", grade:"5. sınıf", unit:"Yaşamımızdaki Elektrik", url:"/question-images/bulb.png" },
+  { key:"lamp-holder", name:"Duy", grade:"5. sınıf", unit:"Yaşamımızdaki Elektrik", url:"/question-images/lamp-holder.png" },
+  { key:"battery", name:"Pil", grade:"5. sınıf", unit:"Yaşamımızdaki Elektrik", url:"/question-images/battery.png" },
+  { key:"open-switch", name:"Açık anahtar", grade:"5. sınıf", unit:"Yaşamımızdaki Elektrik", url:"/question-images/open-switch.png" },
+  { key:"open-circuit", name:"Açık devre", grade:"5. sınıf", unit:"Yaşamımızdaki Elektrik", url:"/question-images/open-circuit.png" },
+  { key:"closed-circuit", name:"Kapalı devre", grade:"5. sınıf", unit:"Yaşamımızdaki Elektrik", url:"/question-images/closed-circuit.png" },
 ];
 
 function AdminDashboard({ onLogout }: { onLogout: () => void }) {
@@ -80,7 +94,9 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
   const [answerOptions,setAnswerOptions]=useState([{text:"Normale yaklaşır",image:""},{text:"Normalden uzaklaşır",image:""},{text:"Yön değiştirmez",image:""},{text:"Geri yansır",image:""}]);
   const [correctAnswer,setCorrectAnswer]=useState("Normale yaklaşır");
   const [uploadedImages,setUploadedImages]=useState<Array<{key:string;url:string}>>([]);
-  const allImages=[...builtInScienceImages,...uploadedImages.map(item=>({key:item.key,name:"Yüklenen görsel",grade:"Özel",url:item.url}))];
+  const [visualGrade,setVisualGrade]=useState("Tümü"); const [visualUnit,setVisualUnit]=useState("Tümü");
+  const allImages=[...builtInScienceImages,...uploadedImages.map(item=>({key:item.key,name:"Yüklenen görsel",grade:"Özel",unit:"Özel görseller",url:item.url}))];
+  const visibleImages=allImages.filter(image=>(visualGrade==="Tümü"||image.grade===visualGrade)&&(visualUnit==="Tümü"||image.unit===visualUnit));
   const load=()=>fetch("/api/data").then(r=>r.json()).then(value=>setData(value)).catch(()=>setNotice("Veriler alınamadı."));
   useEffect(()=>{load();fetch("/api/images").then(r=>r.ok?r.json():{images:[]}).then(v=>setUploadedImages(v.images||[]));},[]);
   function changeType(next:string){setType(next);if(next==="true_false"){setAnswerOptions([{text:"Doğru",image:""},{text:"Yanlış",image:""}]);setCorrectAnswer("Doğru");}else if(next==="open_ended"){setAnswerOptions([]);setCorrectAnswer("");}else{setAnswerOptions([{text:"A seçeneği",image:""},{text:"B seçeneği",image:""},{text:"C seçeneği",image:""},{text:"D seçeneği",image:""}]);setCorrectAnswer("A seçeneği");}}
@@ -118,7 +134,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
         {!showEditor&&section==="students"&&<AdminList title="Tüm öğrenciler" empty="Henüz öğretmen tarafından öğrenci oluşturulmadı." rows={data.users.filter(u=>u.role==="student").map(u=>({id:String(u.id),name:String(u.name),meta:`${u.username} • Öğretmen: ${u.teacher_username||"—"}`}))}/>} 
         {!showEditor&&section==="classes"&&<AdminList title="Tüm sınıflar" empty="Henüz sınıf oluşturulmadı." rows={data.classes.map(c=>({id:String(c.id),name:String(c.name),meta:`${c.grade}. sınıf • ${c.teacher_username}`}))}/>} 
         {!showEditor&&section==="questions"&&<article className="admin-card section-card"><div className="section-head"><div><h2>Soru bankası</h2><p>Yayınlanan ve taslak tüm sorular</p></div><button className="primary-small" onClick={()=>setShowEditor(true)}>+ Yeni soru</button></div><div className="question-list">{displayQuestions.map((item,index)=><div key={`${item.title}-${index}`}><span className="question-type">{item.type}</span><p><b>{item.title}</b><small>{item.grade} • {item.unit}{item.visual?" • Görselli":""}</small></p><strong className={item.status==="Yayında"?"published":"draft"}>{item.status}</strong><button onClick={()=>{setPrompt(item.title);setShowEditor(true);}}>Düzenle</button></div>)}</div></article>}
-        {!showEditor&&section==="visuals"&&<article className="admin-card section-card"><div className="section-head"><div><h2>Fen görsel kütüphanesi</h2><p>Sorularda ve cevap seçeneklerinde kullanılabilen özgün görseller</p></div><label className="primary-small upload-inline">+ Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>uploadImage(e.target.files?.[0])}/></label></div><div className="visual-grid">{allImages.map(image=><button key={image.key} onClick={()=>{setQuestionImage(image.url);setSection("questions");setShowEditor(true);}}><img src={image.url} alt={image.name}/><b>{image.name}</b><span>{image.grade} • Soruda kullan</span></button>)}</div></article>}
+        {!showEditor&&section==="visuals"&&<article className="admin-card section-card"><div className="section-head"><div><h2>Fen görsel kütüphanesi</h2><p>Sınıf → ünite → kavram düzeninde, sorularda ve şıklarda kullanılabilen görseller</p></div><label className="primary-small upload-inline">+ Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>uploadImage(e.target.files?.[0])}/></label></div><div className="library-filters"><select value={visualGrade} onChange={e=>setVisualGrade(e.target.value)}><option>Tümü</option><option>5. sınıf</option><option>6. sınıf</option><option>7. sınıf</option><option>8. sınıf</option><option>Özel</option></select><select value={visualUnit} onChange={e=>setVisualUnit(e.target.value)}><option>Tümü</option>{Array.from(new Set(allImages.map(image=>image.unit))).map(unit=><option key={unit}>{unit}</option>)}</select><b>{visibleImages.length} görsel</b></div><div className="visual-grid">{visibleImages.map(image=><button key={image.key} onClick={()=>{setQuestionImage(image.url);setSection("questions");setShowEditor(true);}}><img src={image.url} alt={image.name}/><b>{image.name}</b><small>{image.unit}</small><span>{image.grade} • Soruda kullan</span></button>)}</div></article>}
         {!showEditor&&section==="ai"&&<article className="admin-card section-card"><div className="section-head"><div><h2>ModAi yönlendirme kuralları</h2><p>Öğrenciye ne zaman ve nasıl müdahale edileceğini belirleyin.</p></div></div><div className="rule-list"><label><input type="checkbox" defaultChecked/> İlk yanlışta kavramsal ipucu ver</label><label><input type="checkbox" defaultChecked/> İkinci yanlışta günlük yaşam örneği göster</label><label><input type="checkbox" defaultChecked/> Tekrarlanan hatayı öğretmene bildir</label><label><input type="checkbox" defaultChecked/> Öğrencinin yaşına uygun Türkçe kullan</label><button onClick={()=>setNotice("AI kuralları kaydedildi.")}>Kuralları kaydet</button></div></article>}
         {!showEditor&&section==="logs"&&<article className="admin-card section-card"><div className="section-head"><div><h2>Sistem ve öğrenme logları</h2><p>Son cevaplar ve yapay zekâ müdahaleleri</p></div><button className="filter-button" onClick={load}>Yenile</button></div><div className="admin-log-table">{[...data.attempts.map(a=>({id:`a${a.id}`,title:`${a.student_username} cevap verdi`,meta:`Soru #${a.question_id} • ${a.is_correct?"Doğru":"Yanlış"} • ${a.created_at}`})),...data.aiInteractions.map(a=>({id:`i${a.id}`,title:`${a.student_username} ModAi kullandı`,meta:`${a.kind} • ${a.created_at}`}))].map(row=><div key={row.id}><b>{row.title}</b><span>{row.meta}</span></div>)}{!data.attempts.length&&!data.aiInteractions.length&&<p className="empty-state">Henüz sistem kaydı oluşmadı.</p>}</div></article>}
       </section>
