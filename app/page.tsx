@@ -57,9 +57,33 @@ const activityLogs = [
   { time: "10:17", student: "Mert Can", event: "Aynı hatayı tekrarladı", detail: "Normale yaklaşma", result: "Öğretmen uyarısı önerildi" },
 ];
 
+const adminQuestions = [
+  { type: "Çoktan seçmeli", title: "Işık havadan cama geçerken nasıl kırılır?", grade: "7. sınıf", unit: "Işığın Kırılması", status: "Yayında", visual: true },
+  { type: "Doğru / Yanlış", title: "Normal çizgisi yüzeye diktir.", grade: "7. sınıf", unit: "Işığın Kırılması", status: "Yayında", visual: false },
+  { type: "Açık uçlu", title: "Sudaki kalemin kırılmış görünmesini açıkla.", grade: "7. sınıf", unit: "Işığın Kırılması", status: "Taslak", visual: true },
+];
+
+function AdminDashboard({ onLogout }: { onLogout: () => void }) {
+  return <main className="teacher-shell admin-shell">
+    <header className="teacher-header"><div className="auth-brand"><span className="brand-mark">M</span><div><b>MODAI</b><small>ADMİN PANELİ</small></div></div><div><span>Admin</span><button onClick={onLogout}>Çıkış yap</button></div></header>
+    <div className="admin-layout">
+      <aside className="teacher-nav admin-nav"><button className="active">Genel bakış</button><button>Öğretmenler</button><button>Öğrenciler</button><button>Sınıflar</button><button>Soru bankası</button><button>Görsel kütüphane</button><button>AI kuralları</button><button>Sistem logları</button></aside>
+      <section className="teacher-main">
+        <div className="teacher-title"><div><p>MODAI YÖNETİM MERKEZİ</p><h1>Tüm sistem tek ekranda</h1><span>Öğretmen, öğrenci, içerik ve yapay zekâ etkileşimlerini izle ve yönet.</span></div><button>+ Yeni soru oluştur</button></div>
+        <div className="metric-grid admin-metrics"><article><span>Öğretmen</span><b>6</b><small>5 aktif</small></article><article><span>Öğrenci</span><b>124</b><small>9 sınıfta</small></article><article><span>Soru</span><b>386</b><small>42 görselli</small></article><article><span>AI müdahalesi</span><b>1.248</b><small>%71 fayda</small></article></div>
+        <div className="admin-grid">
+          <article className="admin-card question-editor"><div className="section-head"><div><h2>Görselli soru düzenleyici</h2><p>Yapay zekâ bu sorunun içeriğine göre ipucu üretir.</p></div><span className="status-pill">Canlı önizleme</span></div><img src="/question-images/refraction-air-glass.png" alt="Havadan cama geçen ışığın normale yaklaşarak kırılması"/><label>Soru türü<select><option>Çoktan seçmeli</option><option>Doğru / Yanlış</option><option>Açık uçlu</option></select></label><label>Soru metni<textarea defaultValue="Işık ışını havadan cam ortama geçerken hangi yönde kırılır?" /></label><div className="option-grid"><button>A — Normale yaklaşır</button><button>B — Normalden uzaklaşır</button><button>C — Yön değiştirmez</button><button>D — Geri yansır</button></div><div className="ai-hint"><b>ModAi ipucu</b><p>Önce ikinci ortamın optik yoğunluğunu karşılaştır. Işık daha yoğun ortama geçerken hızının nasıl değiştiğini düşün.</p><button>İpucunu yeniden üret</button></div></article>
+          <article className="admin-card"><div className="section-head"><div><h2>Soru bankası</h2><p>Tüm sınıf ve ünitelerin merkezi içerik alanı</p></div><button className="filter-button">7. sınıf</button></div><div className="question-list">{adminQuestions.map((item) => <div key={item.title}><span className="question-type">{item.type}</span><p><b>{item.title}</b><small>{item.grade} • {item.unit}{item.visual ? " • Görselli" : ""}</small></p><strong className={item.status === "Yayında" ? "published" : "draft"}>{item.status}</strong><button>Düzenle</button></div>)}</div><div className="curriculum-box"><b>Ortaokul fen görsel kütüphanesi</b><p>5, 6, 7 ve 8. sınıf kavram görselleri ünite bazında eklenebilir. İlk paket: 7. sınıf Işığın Kırılması.</p><span>%12 ilk paket hazır</span></div></article>
+        </div>
+        <div className="admin-grid lower"><article className="admin-card"><div className="section-head"><div><h2>Sistem genelinde öğrenme sinyalleri</h2><p>Öğrencilerin topluca en çok zorlandığı alanlar</p></div></div><div className="topic-list">{topicInsights.map((item) => <div key={item.topic}><p><span>{item.topic}</span><b>{item.students} öğrenci</b></p><i><em style={{width:`${item.rate * 2.4}%`}}/></i></div>)}</div></article><article className="admin-card"><div className="section-head"><div><h2>Veri ve erişim özeti</h2><p>Rollere göre görünürlük ve son hareketler</p></div></div><div className="access-list"><p><b>Admin</b><span>Tüm öğretmen, öğrenci, soru ve log verileri</span></p><p><b>Öğretmen</b><span>Yalnızca kendi sınıfları ve öğrencileri</span></p><p><b>Öğrenci</b><span>Kendi dersleri, ilerlemesi ve ModAi desteği</span></p></div></article></div>
+      </section>
+    </div>
+  </main>;
+}
+
 export default function Home() {
-  const [view, setView] = useState<"login" | "teacher" | "student">("login");
-  const [loginRole, setLoginRole] = useState<"teacher" | "student">("teacher");
+  const [view, setView] = useState<"login" | "admin" | "teacher" | "student">("login");
+  const [loginRole, setLoginRole] = useState<"admin" | "teacher" | "student">("teacher");
   const [authLoading, setAuthLoading] = useState(true);
   const [loginError, setLoginError] = useState("");
   const [username, setUsername] = useState("");
@@ -99,7 +123,7 @@ export default function Home() {
   useEffect(() => {
     fetch("/api/auth/me").then(async (response) => {
       if (!response.ok) return;
-      const data = await response.json() as { role?: "teacher" | "student" };
+      const data = await response.json() as { role?: "admin" | "teacher" | "student" };
       if (data.role) setView(data.role);
     }).finally(() => setAuthLoading(false));
   }, []);
@@ -134,7 +158,7 @@ export default function Home() {
   async function submitLogin(event: React.FormEvent) {
     event.preventDefault();
     setLoginError("");
-    const endpoint = loginRole === "teacher" ? "/api/auth/teacher" : "/api/auth/student";
+    const endpoint = `/api/auth/${loginRole}`;
     const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, password }) });
     const data = await response.json() as { error?: string };
     if (!response.ok) return setLoginError(data.error || "Giriş yapılamadı.");
@@ -204,15 +228,17 @@ export default function Home() {
     <main className="auth-screen">
       <section className="auth-card">
         <div className="auth-brand"><span className="brand-mark">M</span><div><b>MODAI</b><small>FEN ÖĞRENME PLATFORMU</small></div></div>
-        <p className="auth-kicker">HOŞ GELDİNİZ</p><h1>Hesabınıza giriş yapın</h1><p className="auth-intro">Öğretmen paneline veya size özel öğrenci alanına güvenle devam edin.</p>
-        <div className="role-tabs"><button className={loginRole === "teacher" ? "active" : ""} onClick={() => { setLoginRole("teacher"); setLoginError(""); }}>Öğretmen</button><button className={loginRole === "student" ? "active" : ""} onClick={() => { setLoginRole("student"); setLoginError(""); }}>Öğrenci</button></div>
+        <p className="auth-kicker">HOŞ GELDİNİZ</p><h1>Hesabınıza giriş yapın</h1><p className="auth-intro">Admin, öğretmen veya size özel öğrenci alanına güvenle devam edin.</p>
+        <div className="role-tabs"><button className={loginRole === "admin" ? "active" : ""} onClick={() => { setLoginRole("admin"); setLoginError(""); }}>Admin</button><button className={loginRole === "teacher" ? "active" : ""} onClick={() => { setLoginRole("teacher"); setLoginError(""); }}>Öğretmen</button><button className={loginRole === "student" ? "active" : ""} onClick={() => { setLoginRole("student"); setLoginError(""); }}>Öğrenci</button></div>
         {loginRole === "teacher" && <><div id="google-teacher-login" className="google-login" /><div className="auth-divider"><span>veya kullanıcı adıyla</span></div></>}
-        <form className="auth-form" onSubmit={submitLogin}><label>Kullanıcı adı<input value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" placeholder={loginRole === "teacher" ? "Örn. Sedahoca" : "Öğretmeninizin verdiği kullanıcı adı"} required /></label><label>Şifre<input value={password} onChange={(event) => setPassword(event.target.value)} type="password" autoComplete="current-password" placeholder="Şifreniz" required /></label>{loginError && <p className="auth-error">{loginError}</p>}<button className="auth-submit" type="submit">{loginRole === "teacher" ? "Öğretmen paneline gir" : "Derse başla"}</button></form>
+        <form className="auth-form" onSubmit={submitLogin}><label>Kullanıcı adı<input value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" placeholder={loginRole === "admin" ? "Admin" : loginRole === "teacher" ? "Örn. Sedahoca" : "Öğretmeninizin verdiği kullanıcı adı"} required /></label><label>Şifre<input value={password} onChange={(event) => setPassword(event.target.value)} type="password" autoComplete="current-password" placeholder="Şifreniz" required /></label>{loginError && <p className="auth-error">{loginError}</p>}<button className="auth-submit" type="submit">{loginRole === "admin" ? "Admin paneline gir" : loginRole === "teacher" ? "Öğretmen paneline gir" : "Derse başla"}</button></form>
         <small className="auth-help">Öğrenci hesapları öğretmen tarafından oluşturulur.</small>
       </section>
       <aside className="auth-visual"><span>7. SINIF • FEN BİLİMLERİ</span><h2>Her öğrencinin öğrenme yolculuğu görünür olsun.</h2><p>ModAi; ilerlemeyi, doğru ve yanlışları izler; öğretmene sınıf düzeyinde anlaşılır içgörüler sunar.</p><div className="auth-stats"><b>%78<small>ortalama ilerleme</small></b><b>4 sınıf<small>tek panelde</small></b></div></aside>
     </main>
   );
+
+  if (view === "admin") return <AdminDashboard onLogout={logout} />;
 
   if (view === "teacher") return (
     <main className="teacher-shell">
