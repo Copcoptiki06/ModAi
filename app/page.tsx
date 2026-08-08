@@ -151,7 +151,15 @@ const grade6MotionScienceImages = [
   ["Yol-zaman grafiği","distance-time-graph"],
 ].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Kuvvetin Etkisinde Hareket",url:`/question-images/verified/grade6-motion/${file}.png`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages];
+const grade6LivingSystemsScienceImages = [
+  ["Eşeyli üreme","sexual-reproduction"], ["Eşeysiz üreme","asexual-reproduction"],
+  ["Çiçeğin kısımları","flower-parts"], ["Tozlaşma","pollination"], ["Döllenme","fertilization"],
+  ["Tohum","seed"], ["Çimlenme","germination"], ["Başkalaşım","metamorphosis"],
+  ["İnsan üreme sistemi","human-reproductive-system"], ["Beyin","brain"], ["Omurilik","spinal-cord"],
+  ["Sinirler","peripheral-nerves"], ["İç salgı bezleri","endocrine-glands"], ["Ergenlik değişimleri","puberty-changes"],
+].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Canlılarda Sistemler",url:`/question-images/verified/grade6-living-systems/${file}.png`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/")||url.includes("/variants/"))return undefined;const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
