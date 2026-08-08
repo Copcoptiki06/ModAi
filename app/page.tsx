@@ -167,6 +167,24 @@ const grade6ReflectionColorsScienceImages = [
   ["Renkli cisimlerin görünmesi","colored-object-appearance"], ["Güneş enerjisi uygulamaları","solar-energy-applications"],
 ].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Işığın Yansıması ve Renkler",url:`/question-images/variants/verified/grade6-reflection-colors/${file}-card.webp`}));
 
+const grade6DistinguishingMatterScienceImages = [
+  ["Genleşme","expansion"], ["Büzülme","contraction"], ["Erime noktası","melting-point"], ["Donma noktası","freezing-point"],
+  ["Kaynama noktası","boiling-point"], ["Kütle-hacim","mass-volume"], ["Yoğunluk","density"], ["Yoğunluk kabı","density-container"],
+  ["Buzun suda yüzmesi","ice-floating"], ["Yoğunluk modeli","density-model"],
+].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Maddenin Ayırt Edici Özellikleri",url:`/question-images/variants/verified/grade6-distinguishing-matter/${file}-card.webp`}));
+
+const grade6ElectricConductionScienceImages = [
+  ["İletken madde","conductor"], ["Yalıtkan madde","insulator"], ["İletkenlik deney düzeneği","conductivity-test"],
+  ["Direnç","resistance"], ["Tel uzunluğu","wire-length"], ["Tel kalınlığı","wire-thickness"], ["Tel cinsi","wire-material"],
+  ["Ayarlanabilir direnç","variable-resistor"], ["Parlaklık değişimi","brightness-change"],
+].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Elektriğin İletimi ve Direnç",url:`/question-images/variants/verified/grade6-electric-conduction/${file}-card.webp`}));
+
+const grade6SustainableInteractionScienceImages = [
+  ["Biyoçeşitlilik","biodiversity"], ["Habitat","habitat"], ["Nesli tehlikedeki canlı","endangered-species"],
+  ["İstilacı tür","invasive-species"], ["Hava kirliliği","air-pollution"], ["Yakıt türleri","fuel-types"],
+  ["Çevre problemi","environmental-problem"], ["Çözüm modeli","solution-model"],
+].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Sürdürülebilir Yaşam ve Etkileşim",url:`/question-images/variants/verified/grade6-sustainable-interaction/${file}-card.webp`}));
+
 const grade7SpaceAgeScienceImages = [
   ["Roket","rocket"], ["Yapay uydu","artificial-satellite"], ["Uzay sondası","space-probe"],
   ["Uzay istasyonu","space-station"], ["Uzay teleskobu","space-telescope"],
@@ -216,7 +234,55 @@ const grade7SustainableLivingScienceImages = [
   ["Kaynak tasarrufu","resource-conservation"],
 ].map(([name,file])=>({key:`verified-grade7-${file}`,name,grade:"7. sınıf",unit:"Sürdürülebilir Yaşama Doğru",url:`/question-images/variants/verified/grade7-sustainable-living/${file}-card.webp`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...grade7SpaceAgeScienceImages,...grade7ForceEnergyScienceImages,...grade7BodySystemsScienceImages,...grade7MatterJourneyScienceImages,...grade7ElectrificationScienceImages,...grade7SustainableLivingScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages];
+const grade8SeasonsClimateScienceImages = [
+  ["Dünya'nın eksen eğikliği","earth-axis-tilt"], ["Dünya'nın dolanması","earth-revolution"], ["Mevsim oluşumu","season-formation"],
+  ["Güneş ışınlarının geliş açısı","sunlight-angle"], ["Gece-gündüz süreleri","day-night-duration"], ["Hava olayı","weather-event"],
+  ["İklim","climate"], ["Meteoroloji","meteorology"], ["Klimatoloji","climatology"],
+].map(([name,file])=>({key:`verified-grade8-${file}`,name,grade:"8. sınıf",unit:"Mevsimler ve İklim",url:`/question-images/variants/verified/grade8-seasons-climate/${file}-card.webp`}));
+
+const grade8SimpleMachinesScienceImages = [
+  ["Sabit makara","fixed-pulley"], ["Hareketli makara","movable-pulley"], ["Palanga","block-and-tackle"], ["Kaldıraç","lever"],
+  ["Eğik düzlem","inclined-plane"], ["Çıkrık","wheel-and-axle"], ["Vida","screw"], ["Dişli çark","gears"],
+  ["Kasnak","belt-pulley"], ["Basit makine birleşimi","compound-machine"],
+].map(([name,file])=>({key:`verified-grade8-${file}`,name,grade:"8. sınıf",unit:"Kuvvetten Makineye",url:`/question-images/variants/verified/grade8-simple-machines/${file}-card.webp`}));
+
+const grade8SecretLifeScienceImages = [
+  ["Nükleotid","nucleotide"], ["Gen","gene"], ["DNA","dna"], ["Kromozom","chromosome"], ["DNA eşlenmesi","dna-replication"],
+  ["Mitoz evreleri","mitosis-stages"], ["Mayoz evreleri","meiosis-stages"], ["Kalıtım","heredity"], ["Baskın gen","dominant-allele"],
+  ["Çekinik gen","recessive-allele"], ["Çaprazlama","punnett-cross"], ["Akraba evliliği","consanguineous-marriage"],
+  ["Mutasyon","mutation"], ["Modifikasyon","modification"], ["Adaptasyon","adaptation"],
+].map(([name,file])=>({key:`verified-grade8-${file}`,name,grade:"8. sınıf",unit:"Yaşamın Gizemi",url:`/question-images/variants/verified/grade8-secret-of-life/${file}-card.webp`}));
+
+const grade8SoundWorldScienceImages = [
+  ["Titreşen ses kaynağı","vibrating-source"], ["Ses dalgası","sound-wave"], ["Katıda ses","sound-in-solid"], ["Sıvıda ses","sound-in-liquid"],
+  ["Gazda ses","sound-in-gas"], ["Frekans","frequency"], ["İnce ses","high-pitch"], ["Kalın ses","low-pitch"], ["Genlik","amplitude"],
+  ["Ses şiddeti","sound-intensity"], ["Sesin yansıması","sound-reflection"], ["Sesin soğurulması","sound-absorption"],
+  ["Ses yalıtımı","sound-insulation"], ["Ses kirliliği","noise-pollution"],
+].map(([name,file])=>({key:`verified-grade8-${file}`,name,grade:"8. sınıf",unit:"Sesin Dünyası",url:`/question-images/variants/verified/grade8-sound-world/${file}-card.webp`}));
+
+const grade8PeriodicMatterScienceImages = [
+  ["Metal","metal"], ["Ametal","nonmetal"], ["Yarımetal","metalloid"], ["Soy gaz","noble-gas"], ["Fiziksel değişim","physical-change"],
+  ["Kimyasal değişim","chemical-change"], ["Kimyasal tepkime","chemical-reaction"], ["Asit","acid"], ["Baz","base"],
+  ["Ayıraç","indicator"], ["pH ölçeği","ph-scale"], ["Asit-metal etkileşimi","acid-metal"], ["Asit-mermer etkileşimi","acid-marble"],
+].map(([name,file])=>({key:`verified-grade8-${file}`,name,grade:"8. sınıf",unit:"Periyodik Tablo ve Maddenin Etkileşimi",url:`/question-images/variants/verified/grade8-periodic-matter/${file}-card.webp`}));
+
+const grade8ElectricJourneyScienceImages = [
+  ["Seri bağlı devre","series-circuit"], ["Paralel bağlı devre","parallel-circuit"], ["Ampermetre","ammeter"], ["Voltmetre","voltmeter"],
+  ["Akım","electric-current"], ["Gerilim","voltage"], ["Direnç","electrical-resistance"], ["Ohm ilişkisi","ohms-law"],
+  ["Aydınlatma aracı","lighting-device"], ["Elektrikten ısı","electric-to-heat"], ["Elektrikten ışık","electric-to-light"],
+  ["Elektrikten ses","electric-to-sound"], ["Elektrikten hareket","electric-to-motion"], ["Termik santral","thermal-power-plant"],
+  ["Hidroelektrik santral","hydroelectric-plant"], ["Rüzgâr santrali","wind-power-plant"], ["Güneş santrali","solar-power-plant"],
+  ["Nükleer santral","nuclear-power-plant"],
+].map(([name,file])=>({key:`verified-grade8-${file}`,name,grade:"8. sınıf",unit:"Elektriğin Yolculuğu",url:`/question-images/variants/verified/grade8-electric-journey/${file}-card.webp`}));
+
+const grade8SustainableCyclesScienceImages = [
+  ["Fotosentez","photosynthesis"], ["Fotosentez deney düzeneği","photosynthesis-experiment"], ["Solunum","respiration"],
+  ["Karbon döngüsü","carbon-cycle"], ["Su döngüsü","water-cycle"], ["Azot döngüsü","nitrogen-cycle"], ["Oksijen döngüsü","oxygen-cycle"],
+  ["Küresel iklim değişikliği","global-climate-change"], ["Sera etkisi","greenhouse-effect"], ["Kuraklık","drought"],
+  ["Sel","flood"], ["Buzul erimesi","glacier-melting"],
+].map(([name,file])=>({key:`verified-grade8-${file}`,name,grade:"8. sınıf",unit:"Sürdürülebilir Yaşam ve Madde Döngüleri",url:`/question-images/variants/verified/grade8-sustainable-cycles/${file}-card.webp`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...grade7SpaceAgeScienceImages,...grade7ForceEnergyScienceImages,...grade7BodySystemsScienceImages,...grade7MatterJourneyScienceImages,...grade7ElectrificationScienceImages,...grade7SustainableLivingScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages,...grade6DistinguishingMatterScienceImages,...grade6ElectricConductionScienceImages,...grade6SustainableInteractionScienceImages,...grade8SeasonsClimateScienceImages,...grade8SimpleMachinesScienceImages,...grade8SecretLifeScienceImages,...grade8SoundWorldScienceImages,...grade8PeriodicMatterScienceImages,...grade8ElectricJourneyScienceImages,...grade8SustainableCyclesScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/"))return undefined;if(url.includes("/variants/")){const base=url.replace(/-(thumb|card|full|option)\.webp$/i,"");return `${base}-thumb.webp 320w, ${base}-card.webp 640w, ${base}-full.webp 1280w`;}const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
