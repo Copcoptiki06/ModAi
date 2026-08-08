@@ -126,7 +126,20 @@ const matterScienceImages = [
   ["Isı iletkeni","heat-conductor"], ["Isı yalıtkanı","heat-insulator"], ["Isı yalıtım modeli","insulation-model"],
 ].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Maddenin Doğası",url:`/question-images/verified/grade5-matter/${file}.png`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages];
+const electricityScienceImages = [
+  ["Bağlantı kablosu","connection-wire"], ["Devre sembolleri","circuit-symbols"],
+  ["Kapalı devre şeması","circuit-diagram-closed"], ["Pil sayısı ve lamba parlaklığı","battery-brightness"],
+  ["Lamba sayısı ve parlaklık","lamp-brightness"],
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Yaşamımızdaki Elektrik",url:`/question-images/verified/grade5-electricity/${file}.png`}));
+
+const recyclingScienceImages = [
+  ["Kağıt atık","paper-waste"], ["Cam atık","glass-waste"], ["Metal atık","metal-waste"],
+  ["Plastik atık","plastic-waste"], ["Organik atık","organic-waste"], ["Elektronik atık","electronic-waste"],
+  ["Geri dönüşüm kutuları","recycling-bins"], ["Yeniden kullanım","reuse"], ["İleri dönüşüm","upcycling"],
+  ["Atık yönetimi akış şeması","waste-flow"],
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Sürdürülebilir Yaşam ve Geri Dönüşüm",url:`/question-images/verified/grade5-recycling/${file}.png`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/")||url.includes("/variants/"))return undefined;const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
