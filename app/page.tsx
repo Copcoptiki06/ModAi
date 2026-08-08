@@ -91,65 +91,65 @@ const opticsScienceImages = [
   ["Az yoğundan çok yoğuna geçiş","air-to-glass"], ["Çok yoğundan az yoğuna geçiş","glass-to-air"],
   ["İnce kenarlı mercek","convex-lens"], ["Kalın kenarlı mercek","concave-lens"], ["Odak noktası","focal-point"],
   ["Büyüteç","magnifier"], ["Gözlük","eyeglasses"], ["Kamera","camera"], ["Teleskop","telescope"],
-].map(([name,file])=>({key:`verified-${file}`,name,grade:"7. sınıf",unit:"Işığın Kırılması ve Mercekler",url:`/question-images/verified/${file}.png`}));
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"7. sınıf",unit:"Işığın Kırılması ve Mercekler",url:`/question-images/variants/verified/${file}-card.webp`}));
 
 const skyScienceImages = [
   ["Güneş yapısı","sun-structure"], ["Güneş'in dönmesi","sun-rotation"], ["Ay yüzeyi","moon-surface"],
   ["Ay'ın dönmesi","moon-rotation"], ["Ay'ın dolanması","moon-orbit"], ["Ay'ın ana evreleri","moon-main-phases"],
   ["Ay'ın ara evreleri","moon-intermediate-phases"], ["Güneş-Dünya-Ay hareket modeli","sun-earth-moon-motion"],
   ["Güneş-Dünya-Ay büyüklük karşılaştırması","sun-earth-moon-scale"],
-].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Gökyüzündeki Komşularımız ve Biz",url:`/question-images/verified/grade5-sky/${file}.png`}));
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Gökyüzündeki Komşularımız ve Biz",url:`/question-images/variants/verified/grade5-sky/${file}-card.webp`}));
 
 const forceScienceImages = [
   ["Kuvvet yönü","force-direction"], ["Kuvvet büyüklüğü","force-magnitude"], ["Dinamometre","dynamometer"],
   ["Dinamometre ölçeği","dynamometer-scale"], ["Kütle","mass"], ["Ağırlık","weight"], ["Yer çekimi","gravity"],
   ["Sürtünme kuvveti","friction"], ["Hava direnci","air-resistance"], ["Su direnci","water-resistance"],
   ["Sürtünmeyi artırma","increase-friction"], ["Sürtünmeyi azaltma","reduce-friction"],
-].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Kuvveti Tanıyalım",url:`/question-images/verified/grade5-force/${file}.png`}));
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Kuvveti Tanıyalım",url:`/question-images/variants/verified/grade5-force/${file}-card.webp`}));
 
 const cellScienceImages = [
   ["Hayvan hücresi","animal-cell"], ["Hücre zarı","cell-membrane"], ["Sitoplazma","cytoplasm"],
   ["Çekirdek","cell-nucleus"], ["Kemik","bone"], ["Eklem","joint"], ["Kas","muscle"],
   ["İskelet modeli","skeleton"], ["Destek ve hareket sistemi sağlığı","movement-health"],
-].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Canlıların Yapısına Yolculuk",url:`/question-images/verified/grade5-cell/${file}.png`}));
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Canlıların Yapısına Yolculuk",url:`/question-images/variants/verified/grade5-cell/${file}-card.webp`}));
 
 const lightScienceImages = [
   ["Noktasal ışık kaynağı","point-light-source"], ["Işığın doğrusal yayılması","straight-line-light"],
   ["Saydam madde","transparent-material"], ["Yarı saydam madde","translucent-material"], ["Opak madde","opaque-material"],
   ["Tam gölge","umbra"], ["Gölge boyu","shadow-length"], ["Işık kaynağı-cisim-perde modeli","source-object-screen"],
-].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Işığın Dünyası",url:`/question-images/verified/grade5-light/${file}.png`}));
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Işığın Dünyası",url:`/question-images/variants/verified/grade5-light/${file}-card.webp`}));
 
 const matterScienceImages = [
   ["Katı tanecik modeli","solid-particles"], ["Sıvı tanecik modeli","liquid-particles"], ["Gaz tanecik modeli","gas-particles"],
   ["Isı","heat-energy"], ["Sıcaklık","temperature"], ["Termometre","thermometer"], ["Isı alışverişi","heat-exchange"],
   ["Erime","melting"], ["Donma","freezing"], ["Buharlaşma","evaporation"], ["Yoğuşma","condensation"],
   ["Isı iletkeni","heat-conductor"], ["Isı yalıtkanı","heat-insulator"], ["Isı yalıtım modeli","insulation-model"],
-].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Maddenin Doğası",url:`/question-images/verified/grade5-matter/${file}.png`}));
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Maddenin Doğası",url:`/question-images/variants/verified/grade5-matter/${file}-card.webp`}));
 
 const electricityScienceImages = [
   ["Bağlantı kablosu","connection-wire"], ["Devre sembolleri","circuit-symbols"],
   ["Kapalı devre şeması","circuit-diagram-closed"], ["Pil sayısı ve lamba parlaklığı","battery-brightness"],
   ["Lamba sayısı ve parlaklık","lamp-brightness"],
-].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Yaşamımızdaki Elektrik",url:`/question-images/verified/grade5-electricity/${file}.png`}));
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Yaşamımızdaki Elektrik",url:`/question-images/variants/verified/grade5-electricity/${file}-card.webp`}));
 
 const recyclingScienceImages = [
   ["Kağıt atık","paper-waste"], ["Cam atık","glass-waste"], ["Metal atık","metal-waste"],
   ["Plastik atık","plastic-waste"], ["Organik atık","organic-waste"], ["Elektronik atık","electronic-waste"],
   ["Geri dönüşüm kutuları","recycling-bins"], ["Yeniden kullanım","reuse"], ["İleri dönüşüm","upcycling"],
   ["Atık yönetimi akış şeması","waste-flow"],
-].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Sürdürülebilir Yaşam ve Geri Dönüşüm",url:`/question-images/verified/grade5-recycling/${file}.png`}));
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Sürdürülebilir Yaşam ve Geri Dönüşüm",url:`/question-images/variants/verified/grade5-recycling/${file}-card.webp`}));
 
 const grade6SolarScienceImages = [
   ["İç gezegenler","inner-planets"], ["Dış gezegenler","outer-planets"], ["Asteroit kuşağı","asteroid-belt"],
   ["Güneş tutulması","solar-eclipse"], ["Ay tutulması","lunar-eclipse"],
-].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Güneş Sistemi ve Tutulmalar",url:`/question-images/verified/grade6-solar/${file}.png`}));
+].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Güneş Sistemi ve Tutulmalar",url:`/question-images/variants/verified/grade6-solar/${file}-card.webp`}));
 
 const grade6MotionScienceImages = [
   ["Aynı yönlü kuvvetler","same-direction-forces"], ["Zıt yönlü kuvvetler","opposite-forces"],
   ["Bileşke kuvvet","resultant-force"], ["Dengelenmiş kuvvet","balanced-force"],
   ["Dengelenmemiş kuvvet","unbalanced-force"], ["Sürat","speed"], ["Hız","velocity"],
   ["Yol-zaman grafiği","distance-time-graph"],
-].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Kuvvetin Etkisinde Hareket",url:`/question-images/verified/grade6-motion/${file}.png`}));
+].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Kuvvetin Etkisinde Hareket",url:`/question-images/variants/verified/grade6-motion/${file}-card.webp`}));
 
 const grade6LivingSystemsScienceImages = [
   ["Eşeyli üreme","sexual-reproduction"], ["Eşeysiz üreme","asexual-reproduction"],
@@ -157,12 +157,12 @@ const grade6LivingSystemsScienceImages = [
   ["Tohum","seed"], ["Çimlenme","germination"], ["Başkalaşım","metamorphosis"],
   ["İnsan üreme sistemi","human-reproductive-system"], ["Beyin","brain"], ["Omurilik","spinal-cord"],
   ["Sinirler","peripheral-nerves"], ["İç salgı bezleri","endocrine-glands"], ["Ergenlik değişimleri","puberty-changes"],
-].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Canlılarda Sistemler",url:`/question-images/verified/grade6-living-systems/${file}.png`}));
+].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Canlılarda Sistemler",url:`/question-images/variants/verified/grade6-living-systems/${file}-card.webp`}));
 
 const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
-function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/")||url.includes("/variants/"))return undefined;const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
+function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/"))return undefined;if(url.includes("/variants/")){const base=url.replace(/-(thumb|card|full|option)\.webp$/i,"");return `${base}-thumb.webp 320w, ${base}-card.webp 640w, ${base}-full.webp 1280w`;}const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
 
 function AdminDashboard({ onLogout }: { onLogout: () => void }) {
   const [section,setSection]=useState("overview");
