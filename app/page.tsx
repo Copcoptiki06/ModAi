@@ -201,7 +201,22 @@ const grade7MatterJourneyScienceImages = [
   ["Damıtma","distillation"],
 ].map(([name,file])=>({key:`verified-grade7-${file}`,name,grade:"7. sınıf",unit:"Maddenin Doğasına Yolculuk",url:`/question-images/variants/verified/grade7-matter-journey/${file}-card.webp`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...grade7SpaceAgeScienceImages,...grade7ForceEnergyScienceImages,...grade7BodySystemsScienceImages,...grade7MatterJourneyScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages];
+const grade7ElectrificationScienceImages = [
+  ["Sürtünme ile elektriklenme","friction-electrification"], ["Dokunma ile elektriklenme","contact-electrification"],
+  ["Etki ile elektriklenme","induction-electrification"], ["Pozitif yük","positive-charge"],
+  ["Negatif yük","negative-charge"], ["Nötr cisim","neutral-object"],
+  ["Aynı yüklerin itmesi","like-charges-repel"], ["Zıt yüklerin çekmesi","opposite-charges-attract"],
+  ["Elektroskop","electroscope"],
+].map(([name,file])=>({key:`verified-grade7-${file}`,name,grade:"7. sınıf",unit:"Elektriklenme",url:`/question-images/variants/verified/grade7-electrification/${file}-card.webp`}));
+
+const grade7SustainableLivingScienceImages = [
+  ["Üretici","producer"], ["Tüketici","consumer"], ["Ayrıştırıcı","decomposer"],
+  ["Besin zinciri","food-chain"], ["Besin ağı","food-web"], ["Enerji piramidi","energy-pyramid"],
+  ["Su tasarrufu","water-conservation"], ["Enerji tasarrufu","energy-conservation"],
+  ["Kaynak tasarrufu","resource-conservation"],
+].map(([name,file])=>({key:`verified-grade7-${file}`,name,grade:"7. sınıf",unit:"Sürdürülebilir Yaşama Doğru",url:`/question-images/variants/verified/grade7-sustainable-living/${file}-card.webp`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...grade7SpaceAgeScienceImages,...grade7ForceEnergyScienceImages,...grade7BodySystemsScienceImages,...grade7MatterJourneyScienceImages,...grade7ElectrificationScienceImages,...grade7SustainableLivingScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/"))return undefined;if(url.includes("/variants/")){const base=url.replace(/-(thumb|card|full|option)\.webp$/i,"");return `${base}-thumb.webp 320w, ${base}-card.webp 640w, ${base}-full.webp 1280w`;}const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
