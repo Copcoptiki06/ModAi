@@ -139,7 +139,19 @@ const recyclingScienceImages = [
   ["Atık yönetimi akış şeması","waste-flow"],
 ].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Sürdürülebilir Yaşam ve Geri Dönüşüm",url:`/question-images/verified/grade5-recycling/${file}.png`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages];
+const grade6SolarScienceImages = [
+  ["İç gezegenler","inner-planets"], ["Dış gezegenler","outer-planets"], ["Asteroit kuşağı","asteroid-belt"],
+  ["Güneş tutulması","solar-eclipse"], ["Ay tutulması","lunar-eclipse"],
+].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Güneş Sistemi ve Tutulmalar",url:`/question-images/verified/grade6-solar/${file}.png`}));
+
+const grade6MotionScienceImages = [
+  ["Aynı yönlü kuvvetler","same-direction-forces"], ["Zıt yönlü kuvvetler","opposite-forces"],
+  ["Bileşke kuvvet","resultant-force"], ["Dengelenmiş kuvvet","balanced-force"],
+  ["Dengelenmemiş kuvvet","unbalanced-force"], ["Sürat","speed"], ["Hız","velocity"],
+  ["Yol-zaman grafiği","distance-time-graph"],
+].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Kuvvetin Etkisinde Hareket",url:`/question-images/verified/grade6-motion/${file}.png`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/")||url.includes("/variants/"))return undefined;const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
