@@ -182,7 +182,16 @@ const grade7ForceEnergyScienceImages = [
   ["Enerjinin korunumu","energy-conservation"], ["Sürtünme ve enerji","friction-energy"],
 ].map(([name,file])=>({key:`verified-grade7-${file}`,name,grade:"7. sınıf",unit:"Kuvvet ve Enerjiyi Keşfedelim",url:`/question-images/variants/verified/grade7-force-energy/${file}-card.webp`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...grade7SpaceAgeScienceImages,...grade7ForceEnergyScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages];
+const grade7BodySystemsScienceImages = [
+  ["Ağız","mouth"], ["Yutak","pharynx"], ["Yemek borusu","esophagus"], ["Mide","stomach"],
+  ["İnce bağırsak","small-intestine"], ["Kalın bağırsak","large-intestine"], ["Karaciğer","liver"], ["Pankreas","pancreas"],
+  ["Kalp","heart"], ["Damarlar","blood-vessels"], ["Kan hücreleri","blood-cells"], ["Akciğer","lungs"],
+  ["Soluk borusu","trachea"], ["Böbrek","kidney"], ["Üreter","ureter"], ["Mesane","bladder"],
+  ["Sindirim sistemi","digestive-system"], ["Dolaşım sistemi","circulatory-system"],
+  ["Solunum sistemi","respiratory-system"], ["Boşaltım sistemi","urinary-system"],
+].map(([name,file])=>({key:`verified-grade7-${file}`,name,grade:"7. sınıf",unit:"Vücudumuzdaki Sistemler",url:`/question-images/variants/verified/grade7-body-systems/${file}-card.webp`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...grade7SpaceAgeScienceImages,...grade7ForceEnergyScienceImages,...grade7BodySystemsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/"))return undefined;if(url.includes("/variants/")){const base=url.replace(/-(thumb|card|full|option)\.webp$/i,"");return `${base}-thumb.webp 320w, ${base}-card.webp 640w, ${base}-full.webp 1280w`;}const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
