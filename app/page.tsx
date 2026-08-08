@@ -167,7 +167,15 @@ const grade6ReflectionColorsScienceImages = [
   ["Renkli cisimlerin görünmesi","colored-object-appearance"], ["Güneş enerjisi uygulamaları","solar-energy-applications"],
 ].map(([name,file])=>({key:`verified-grade6-${file}`,name,grade:"6. sınıf",unit:"Işığın Yansıması ve Renkler",url:`/question-images/variants/verified/grade6-reflection-colors/${file}-card.webp`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages];
+const grade7SpaceAgeScienceImages = [
+  ["Roket","rocket"], ["Yapay uydu","artificial-satellite"], ["Uzay sondası","space-probe"],
+  ["Uzay istasyonu","space-station"], ["Uzay teleskobu","space-telescope"],
+  ["Optik teleskop","optical-telescope"], ["Radyo teleskop","radio-telescope"],
+  ["Uzay kirliliği","space-debris"], ["Yıldız oluşumu","star-formation"],
+  ["Yıldız yaşam döngüsü","star-life-cycle"], ["Galaksi","galaxy"], ["Evren","universe"],
+].map(([name,file])=>({key:`verified-grade7-${file}`,name,grade:"7. sınıf",unit:"Uzay Çağı",url:`/question-images/variants/verified/grade7-space-age/${file}-card.webp`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...grade7SpaceAgeScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/"))return undefined;if(url.includes("/variants/")){const base=url.replace(/-(thumb|card|full|option)\.webp$/i,"");return `${base}-thumb.webp 320w, ${base}-card.webp 640w, ${base}-full.webp 1280w`;}const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
