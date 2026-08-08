@@ -113,7 +113,20 @@ const cellScienceImages = [
   ["İskelet modeli","skeleton"], ["Destek ve hareket sistemi sağlığı","movement-health"],
 ].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Canlıların Yapısına Yolculuk",url:`/question-images/verified/grade5-cell/${file}.png`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages];
+const lightScienceImages = [
+  ["Noktasal ışık kaynağı","point-light-source"], ["Işığın doğrusal yayılması","straight-line-light"],
+  ["Saydam madde","transparent-material"], ["Yarı saydam madde","translucent-material"], ["Opak madde","opaque-material"],
+  ["Tam gölge","umbra"], ["Gölge boyu","shadow-length"], ["Işık kaynağı-cisim-perde modeli","source-object-screen"],
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Işığın Dünyası",url:`/question-images/verified/grade5-light/${file}.png`}));
+
+const matterScienceImages = [
+  ["Katı tanecik modeli","solid-particles"], ["Sıvı tanecik modeli","liquid-particles"], ["Gaz tanecik modeli","gas-particles"],
+  ["Isı","heat-energy"], ["Sıcaklık","temperature"], ["Termometre","thermometer"], ["Isı alışverişi","heat-exchange"],
+  ["Erime","melting"], ["Donma","freezing"], ["Buharlaşma","evaporation"], ["Yoğuşma","condensation"],
+  ["Isı iletkeni","heat-conductor"], ["Isı yalıtkanı","heat-insulator"], ["Isı yalıtım modeli","insulation-model"],
+].map(([name,file])=>({key:`verified-${file}`,name,grade:"5. sınıf",unit:"Maddenin Doğası",url:`/question-images/verified/grade5-matter/${file}.png`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/")||url.includes("/variants/"))return undefined;const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}
