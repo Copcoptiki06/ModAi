@@ -175,7 +175,14 @@ const grade7SpaceAgeScienceImages = [
   ["Yıldız yaşam döngüsü","star-life-cycle"], ["Galaksi","galaxy"], ["Evren","universe"],
 ].map(([name,file])=>({key:`verified-grade7-${file}`,name,grade:"7. sınıf",unit:"Uzay Çağı",url:`/question-images/variants/verified/grade7-space-age/${file}-card.webp`}));
 
-const curriculumScienceImages = [...opticsScienceImages,...grade7SpaceAgeScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages];
+const grade7ForceEnergyScienceImages = [
+  ["Fiziksel iş","physical-work"], ["Kuvvet-yol ilişkisi","force-distance"],
+  ["Kinetik enerji","kinetic-energy"], ["Çekim potansiyel enerjisi","gravitational-potential"],
+  ["Esneklik potansiyel enerjisi","elastic-potential"], ["Enerji dönüşümü","energy-transformation"],
+  ["Enerjinin korunumu","energy-conservation"], ["Sürtünme ve enerji","friction-energy"],
+].map(([name,file])=>({key:`verified-grade7-${file}`,name,grade:"7. sınıf",unit:"Kuvvet ve Enerjiyi Keşfedelim",url:`/question-images/variants/verified/grade7-force-energy/${file}-card.webp`}));
+
+const curriculumScienceImages = [...opticsScienceImages,...grade7SpaceAgeScienceImages,...grade7ForceEnergyScienceImages,...skyScienceImages,...forceScienceImages,...cellScienceImages,...lightScienceImages,...matterScienceImages,...electricityScienceImages,...recyclingScienceImages,...grade6SolarScienceImages,...grade6MotionScienceImages,...grade6LivingSystemsScienceImages,...grade6ReflectionColorsScienceImages];
 
 const plannedVisualCount = Object.values(curriculumVisualInventory).reduce((gradeTotal, units) => gradeTotal + Object.values(units).reduce((unitTotal, concepts) => unitTotal + concepts.length, 0), 0);
 function scienceImageSrcSet(url:string){if(!url.startsWith("/question-images/"))return undefined;if(url.includes("/variants/")){const base=url.replace(/-(thumb|card|full|option)\.webp$/i,"");return `${base}-thumb.webp 320w, ${base}-card.webp 640w, ${base}-full.webp 1280w`;}const relative=url.replace("/question-images/","").replace(/\.png$/i,"");return `/question-images/variants/${relative}-thumb.webp 320w, /question-images/variants/${relative}-card.webp 640w, /question-images/variants/${relative}-full.webp 1280w`;}

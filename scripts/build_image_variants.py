@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 from PIL import Image, ImageOps
 
 SOURCE = Path(__file__).resolve().parents[1] / "public" / "question-images"
@@ -6,7 +7,8 @@ OUTPUT = SOURCE / "variants"
 OUTPUT.mkdir(parents=True, exist_ok=True)
 SIZES = {"thumb": (320, 180), "card": (640, 360), "full": (1280, 720), "option": (256, 256)}
 
-sources = [item for item in SOURCE.rglob("*.png") if "variants" not in item.parts]
+scan_root = SOURCE / sys.argv[1] if len(sys.argv) > 1 else SOURCE
+sources = [item for item in scan_root.rglob("*.png") if "variants" not in item.parts]
 for source in sources:
     relative = source.relative_to(SOURCE)
     target_dir = OUTPUT / relative.parent
