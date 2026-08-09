@@ -1,4 +1,4 @@
-const CACHE = "modai-fen-v31";
+const CACHE = "modai-fen-v32";
 const APP_SHELL = ["/", "/manifest.webmanifest", "/favicon.svg", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", (event) => {
