@@ -396,6 +396,50 @@ const grade7Labs = [
   {id:"growth",unit:"Canlılarda Üreme, Büyüme ve Gelişme",title:"Bitkiyi büyüt",goal:"Işık, su ve sıcaklığın büyümeye etkisini modelle."},
 ];
 
+type EvidenceRow = { angle: number; medium: string; result: number };
+
+function ModelInquiryStudio(){
+  const phases=["İlk modelim","Tahminim","Deneyim","Kanıtım","Yeni modelim"];
+  const [phase,setPhase]=useState(0);
+  const [prediction,setPrediction]=useState("");
+  const [testAngle,setTestAngle]=useState(30);
+  const [testMedium,setTestMedium]=useState("su");
+  const [evidence,setEvidence]=useState<EvidenceRow[]>([]);
+  const [claim,setClaim]=useState("");
+  const [revision,setRevision]=useState("");
+  const [hintLevel,setHintLevel]=useState(0);
+  const index=testMedium==="cam"?1.5:1.33;
+  const result=Math.round(Math.asin(Math.sin(testAngle*Math.PI/180)/index)*180/Math.PI);
+  const modelStrength=Math.min(100,20+(prediction?15:0)+evidence.length*15+(claim?20:0)+(revision?15:0));
+  const canAdvance=phase===0||phase===1?Boolean(prediction):phase===2?evidence.length>=3:phase===3?Boolean(claim):Boolean(revision);
+  const hint=[
+    "Önce açının yüzeye göre değil, normal çizgisine göre ölçüldüğünü kontrol et.",
+    "Tek ölçüm bir modeli sınamak için yeterli olmayabilir. Aynı ortamda en az üç farklı açı dene.",
+    "Kanıt cümlende ölçüm kullan: ‘Gelme açısı ... iken kırılma açısı ... oldu.’",
+    "Yeni modelin yalnızca sonucu değil, ortam değişiminin ışının yönünü neden değiştirdiğini de açıklasın."
+  ][Math.min(hintLevel,3)];
+  function runTest(){
+    setEvidence(rows=>rows.some(row=>row.angle===testAngle&&row.medium===testMedium)?rows:[...rows,{angle:testAngle,medium:testMedium,result}]);
+    setHintLevel(0);
+  }
+  function resetStudio(){setPhase(0);setPrediction("");setEvidence([]);setClaim("");setRevision("");setHintLevel(0);}
+  return <section className="inquiry-studio">
+    <div className="studio-heading"><div><p className="eyebrow">MODAI MODEL STÜDYOSU</p><h2>Fikrini kur, kanıtla sına, modelini geliştir</h2><p>Burada doğru cevabı seçmek yetmez. Bir bilim insanı gibi açıklayıcı model oluşturursun.</p></div><div className="model-meter"><span>Model gücü</span><b>%{modelStrength}</b><i><em style={{width:`${modelStrength}%`}}/></i></div></div>
+    <nav className="inquiry-steps" aria-label="Modelleme döngüsü">{phases.map((item,index)=><button key={item} className={`${phase===index?"active":""} ${phase>index?"done":""}`} onClick={()=>index<=phase&&setPhase(index)}><span>{phase>index?"✓":index+1}</span><b>{item}</b></button>)}</nav>
+    <div className="studio-workspace">
+      <div className="studio-task">
+        {phase===0&&<><span className="studio-tag">OLAYI ANLAMLANDIR</span><h3>Havadan suya eğik giren ışık nasıl ilerler?</h3><p>İlk düşünceni seç. Bu bir sınav değil; başlangıç modelini görünür hâle getiriyoruz.</p><div className="prediction-grid">{["Normale yaklaşır","Normalden uzaklaşır","Yönü değişmez"].map(item=><button className={prediction===item?"selected":""} onClick={()=>setPrediction(item)} key={item}><i/>{item}</button>)}</div></>}
+        {phase===1&&<><span className="studio-tag">TAHMİN + GEREKÇE</span><h3>Modelin hangi ilişkiye dayanıyor?</h3><p>“{prediction||"Henüz bir tahmin seçmedin"}” tahminini sınamak için hangi değişkenleri karşılaştırmalısın?</p><div className="reason-cards"><button onClick={()=>setPrediction("Optik ortam değişince hız ve yön birlikte değişir")}>Ortam türü ve ışın yönü</button><button onClick={()=>setPrediction("Gelme açısı değişince kırılma açısı değişir")}>Gelme ve kırılma açıları</button><button onClick={()=>setPrediction("Işığın rengi sonucu belirler")}>Işığın rengi</button></div></>}
+        {phase===2&&<><span className="studio-tag">KONTROLLÜ DENEY</span><h3>Tek değişkeni değiştir, ölçümünü kaydet</h3><div className="studio-controls"><label>Gelme açısı <b>{testAngle}°</b><input aria-label="Deney gelme açısı" type="range" min="10" max="75" step="5" value={testAngle} onChange={event=>setTestAngle(Number(event.target.value))}/></label><label>İkinci ortam<select aria-label="Deney ikinci ortam" value={testMedium} onChange={event=>setTestMedium(event.target.value)}><option value="su">Su</option><option value="cam">Cam</option></select></label><button onClick={runTest}>Deneyi çalıştır ve kaydet</button></div><div className="studio-ray"><i className="studio-normal"/><i className="studio-surface"/><i className="studio-in" style={{transform:`rotate(${270-testAngle}deg)`}}/><i className="studio-out" style={{transform:`rotate(${90-result}deg)`}}/><span>i={testAngle}°</span><b>r={result}°</b></div></>}
+        {phase===3&&<><span className="studio-tag">KANITTAN İDDİAYA</span><h3>Ölçümlerin hangi açıklamayı destekliyor?</h3><div className="evidence-table"><div><b>Ortam</b><b>Gelme</b><b>Kırılma</b></div>{evidence.map((row,index)=><div key={`${row.medium}-${row.angle}-${index}`}><span>{row.medium==="cam"?"Cam":"Su"}</span><span>{row.angle}°</span><span>{row.result}°</span></div>)}</div><div className="claim-list">{["Kırılma açısı her ölçümde gelme açısından küçüktür; ışın normale yaklaşır.","Gelme açısı değişse de kırılma açısı aynı kalır.","Ortamın ışının yönüne etkisi yoktur."].map(item=><button className={claim===item?"selected":""} onClick={()=>setClaim(item)} key={item}>{item}</button>)}</div></>}
+        {phase===4&&<><span className="studio-tag">MODELİ REVİZE ET</span><h3>İlk fikrin ile kanıtların arasında ne değişti?</h3><textarea value={revision} onChange={event=>setRevision(event.target.value)} placeholder="Yeni modelimi şöyle açıklıyorum: Işık havadan suya geçerken..."/><div className="revision-prompts"><span>Neyi değiştirdim?</span><span>Hangi kanıt fikrimi değiştirdi?</span><span>Bu model yeni bir durumda ne öngörür?</span></div></>}
+        <div className="studio-footer"><button className="studio-hint" onClick={()=>setHintLevel(value=>Math.min(3,value+1))}>ModAi’den küçük ipucu al</button>{phase<4?<button className="studio-next" disabled={!canAdvance} onClick={()=>setPhase(value=>Math.min(4,value+1))}>Sonraki adım →</button>:<button className="studio-next" disabled={!revision} onClick={resetStudio}>Modeli tamamla ✓</button>}</div>
+      </div>
+      <aside className="studio-ai"><div className="mini-mascot">M</div><div><span>MODAI REHBERLİĞİ</span><h3>Cevabı değil, sonraki düşünme adımını verir.</h3><p>{hint}</p></div><ul><li><b>{evidence.length}</b> deney kanıtı</li><li><b>{hintLevel}</b> kullanılan ipucu</li><li><b>{phase+1}/5</b> modelleme aşaması</li></ul><small>Öğretmenin; ilk modelini, revizyonunu ve kullandığın desteği görebilir.</small></aside>
+    </div>
+  </section>;
+}
+
 function ModelLaboratory(){
   const [lab,setLab]=useState("light");
   const [angle,setAngle]=useState(42),[medium,setMedium]=useState("cam"),[mass,setMass]=useState(2),[height,setHeight]=useState(3),[switchOn,setSwitchOn]=useState(false),[bulbs,setBulbs]=useState(1),[cellStep,setCellStep]=useState(0),[mixture,setMixture]=useState("kum-su"),[method,setMethod]=useState(""),[orbit,setOrbit]=useState(3),[water,setWater]=useState(60),[sun,setSun]=useState(70),[temperature,setTemperature]=useState(24),[debris,setDebris]=useState(70),[cleaning,setCleaning]=useState(20),[force,setForce]=useState(20),[distance,setDistance]=useState(5),[connection,setConnection]=useState("seri"),[solute,setSolute]=useState(25),[solvent,setSolvent]=useState(100),[mirror,setMirror]=useState("duz"),[objectDistance,setObjectDistance]=useState(50),[protons,setProtons]=useState(6),[neutrons,setNeutrons]=useState(6),[electrons,setElectrons]=useState(6),[lens,setLens]=useState("ince"),[lensDistance,setLensDistance]=useState(60),[speed,setSpeed]=useState(5),[movingMass,setMovingMass]=useState(3),[planet,setPlanet]=useState("Dünya"),[bodyMass,setBodyMass]=useState(40),[lifeStep,setLifeStep]=useState(0),[objective,setObjective]=useState(80),[eyepiece,setEyepiece]=useState(10),[pendulum,setPendulum]=useState(35),[meiosisStep,setMeiosisStep]=useState(0),[pollinationStep,setPollinationStep]=useState(0),[waste,setWaste]=useState("cam"),[wasteBin,setWasteBin]=useState("");
@@ -647,6 +691,8 @@ export default function Home() {
             </div>
             <div className="explain"><span className="explain-icon">{stages[stageIndex].icon}</span><div><small>{stages[stageIndex].label.toUpperCase()} BÖLÜMÜ</small><p><b>{stages[stageIndex].label}</b>, {stages[stageIndex].note.toLocaleLowerCase("tr-TR")}. Işının izlediği yolu yorumlarken açılar her zaman normal çizgisine göre ölçülür.</p></div></div>
           </div>
+
+          <ModelInquiryStudio/>
 
           <ModelLaboratory/>
 
